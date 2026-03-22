@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>VIDMOSS Partner · Join Network</title>
+    <!-- Font Awesome 6 (free) for outline icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f0f5fb 0%, #e9f0f7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .partner-card {
+            max-width: 1280px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 32, 64, 0.2), 0 4px 12px rgba(0, 0, 0, 0.03);
+            padding: 2.5rem 2.2rem;
+            transition: all 0.25s ease;
+        }
+
+        .top-badge {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 1.25rem;
+        }
+
+        .join-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(130deg, #003153, #1b4a6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .join-title i {
+            background: none;
+            -webkit-text-fill-color: #1e4a76;
+            margin-right: 8px;
+            font-size: 2rem;
+        }
+
+        .register-now {
+            background: #ecf7ff;
+            padding: 0.6rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            color: #004a7c;
+            font-size: 1rem;
+            border: 1px solid #b8d1e6;
+            box-shadow: 0 2px 6px rgba(0,60,110,0.05);
+        }
+
+        .register-now i {
+            margin-right: 8px;
+            color: #0070b3;
+        }
+
+        .partner-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.9fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .form-section {
+            background: #fbfdff;
+            border-radius: 2rem;
+            padding: 1.8rem 1.8rem 2rem;
+            border: 1px solid #e2edf5;
+            box-shadow: inset 0 1px 4px #ffffff, 0 8px 18px -8px rgba(0,70,120,0.12);
+        }
+
+        .form-headline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #11324b;
+        }
+
+        .form-headline i {
+            font-size: 2rem;
+            color: #176ba0;
+            background: #e1effb;
+            padding: 10px;
+            border-radius: 18px;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #2b4b6f;
+            margin-bottom: 6px;
+            letter-spacing: 0.02rem;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1.5px solid #cfdfee;
+            border-radius: 60px;
+            background: white;
+            transition: all 0.15s;
+            padding: 0 10px 0 18px;
+        }
+
+        .input-wrapper i {
+            color: #3f6b9c;
+            font-size: 1.1rem;
+            width: 24px;
+        }
+
+        .input-wrapper input, 
+        .input-wrapper select {
+            width: 100%;
+            padding: 14px 10px 14px 6px;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            color: #101c2c;
+            outline: none;
+            font-weight: 500;
+        }
+
+        .input-wrapper select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%233f6b9c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: #0077be;
+            box-shadow: 0 0 0 4px rgba(0,100,180,0.1);
+        }
+
+        .interest-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .interest-item {
+            flex: 1 1 auto;
+            background: #f2f7fd;
+            border: 1.5px solid #c6d9ec;
+            border-radius: 40px;
+            padding: 8px 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1f4970;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            transition: 0.1s;
+            cursor: default;
+        }
+
+        .interest-item i {
+            font-size: 0.9rem;
+            color: #2a6a9e;
+        }
+
+        .code-wrapper {
+            background: #ecf3fa;
+            border-color: #b8d2e8;
+        }
+
+        .code-wrapper input {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #022b49;
+        }
+
+        .unique-code-hint {
+            font-size: 0.8rem;
+            color: #3f6990;
+            margin-top: 5px;
+            margin-left: 18px;
+        }
+
+        .highlight-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.5rem 0 1.8rem;
+        }
+
+        .chip-card {
+            background: #ffffff;
+            border-radius: 60px;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #bed8f0;
+            box-shadow: 0 2px 6px #deecf9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #134979;
+            font-size: 0.9rem;
+        }
+
+        .chip-card i {
+            color: #0070c0;
+            font-size: 1.2rem;
+        }
+
+        .commission-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            background: #e9f2fb;
+            border-radius: 40px;
+            padding: 1rem 1.8rem;
+            margin: 1.8rem 0 1.5rem;
+            justify-content: center;
+            border: 1px solid #b7d3ed;
+        }
+
+        .commission-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #00497e;
+        }
+
+        .commission-item i {
+            font-size: 1.5rem;
+            color: #1f6fb0;
+        }
+
+        .submit-btn {
+            background: #004b7c;
+            border: none;
+            border-radius: 60px;
+            padding: 1.2rem 2rem;
+            width: 100%;
+            color: white;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 12px 20px -12px #00355e;
+            transition: 0.18s;
+            cursor: pointer;
+            border: 1px solid #002b4a;
+            margin-top: 15px;
+        }
+
+        .submit-btn i {
+            font-size: 1.7rem;
+        }
+
+        .submit-btn:hover {
+            background: #003b60;
+            transform: scale(1.01);
+            box-shadow: 0 14px 24px -10px #002842;
+        }
+
+        .info-panel {
+            background: #f4faff;
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            border: 1px solid #dae8f2;
+            box-shadow: 0 12px 24px -16px #19415f33;
+        }
+
+        .partner-code-badge {
+            background: white;
+            border-radius: 60px;
+            padding: 1rem 1.2rem;
+            border: 1px solid #bed3e9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #003a66;
+            margin-bottom: 2rem;
+        }
+
+        .partner-code-badge i {
+            font-size: 2.2rem;
+            color: #006bb3;
+        }
+
+        .feature-bullets {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .feature-bullets li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #153e5a;
+        }
+
+        .feature-bullets li i {
+            font-size: 1.5rem;
+            color: #0066a0;
+            background: #ffffff;
+            padding: 6px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px #c6d9eb;
+        }
+
+        .genuine-tag {
+            background: #ddeeff;
+            border-radius: 40px;
+            padding: 0.8rem 1.2rem;
+            text-align: center;
+            font-weight: 600;
+            color: #00467a;
+            margin: 2rem 0 1.5rem;
+            border: 1px solid #add0ec;
+        }
+
+        .contact-block {
+            background: white;
+            border-radius: 30px;
+            padding: 1.5rem 1.2rem;
+            border: 1px solid #bedaf0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-line {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 1.1rem;
+            font-weight: 550;
+            color: #103856;
+        }
+
+        .contact-line i {
+            width: 32px;
+            font-size: 1.5rem;
+            color: #0070b3;
+        }
+
+        .contact-line a {
+            text-decoration: none;
+            color: #103856;
+        }
+
+        .contact-line a:hover {
+            text-decoration: underline;
+            color: #0059a3;
+        }
+
+        @media screen and (max-width: 800px) {
+            .partner-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .top-badge {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .join-title {
+                font-size: 1.6rem;
+            }
+            .form-headline {
+                font-size: 1.3rem;
+            }
+            .submit-btn {
+                font-size: 1.2rem;
+                padding: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            body { padding: 0.5rem; }
+            .partner-card { padding: 1.5rem 1rem; }
+            .interest-row { flex-direction: column; }
+            .chip-card { width: 100%; }
+        }
+
+        .partner-card {
+            animation: cardAppear 0.4s ease-out;
+        }
+
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .submit-btn i {
+            animation: subtleRing 2s infinite ease;
+        }
+
+        @keyframes subtleRing {
+            0% { transform: rotate(0deg); }
+            5% { transform: rotate(5deg); }
+            10% { transform: rotate(-5deg); }
+            15% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .unique-code-hint i {
+            font-size: 0.7rem;
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="partner-card">
+        <div class="top-badge">
+            <div class="join-title">
+                <i class="fas fa-handshake" style="background: none;"></i> Join VIDMOSS Partner Network
+            </div>
+            <div class="register-now">
+                <i class="fas fa-pen-to-square"></i> Register Now & Start Your Business Journey
+            </div>
+        </div>
+
+        <div class="partner-grid">
+            <div class="form-section">
+                <div class="form-headline">
+                    <i class="fas fa-file-signature"></i> 
+                    <span>Partner Registration Form</span>
+                </div>
+                <div style="margin-bottom: 1.2rem; color: #1e4f7a; font-weight: 500;">
+                    <i class="fas fa-id-card"></i> Fill the form & Get Your Partner Code Instantly
+                </div>
+
+                <!-- form fields - all inputs empty -->
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user-outline"></i>
+                        <input type="text" placeholder="Full Name" id="fullName">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Mobile Number</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-mobile-alt"></i>
+                        <input type="tel" placeholder="Mobile Number" id="mobileNo">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email ID" id="email">
+                    </div>
+                </div>
+
+                <!-- City dropdown with more options -->
+                <div class="input-group">
+                    <label>City</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-city"></i>
+                        <select id="city">
+                            <option value="" disabled selected>Select City</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Ahmedabad">Ahmedabad</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Kolkata">Kolkata</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Jaipur">Jaipur</option>
+                            <option value="Lucknow">Lucknow</option>
+                            <option value="Kanpur">Kanpur</option>
+                            <option value="Nagpur">Nagpur</option>
+                            <option value="Indore">Indore</option>
+                            <option value="Bhopal">Bhopal</option>
+                            <option value="Patna">Patna</option>
+                            <option value="Ludhiana">Ludhiana</option>
+                            <option value="Agra">Agra</option>
+                            <option value="Nashik">Nashik</option>
+                            <option value="Vadodara">Vadodara</option>
+                            <option value="Surat">Surat</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- State dropdown with more options -->
+                <div class="input-group">
+                    <label>State</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-map-pin"></i>
+                        <select id="state">
+                            <option value="" disabled selected>Select State</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Delhi NCR">Delhi NCR</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="West Bengal">West Bengal</option>
+                            <option value="Rajasthan">Rajasthan</option>
+                            <option value="Uttar Pradesh">Uttar Pradesh</option>
+                            <option value="Madhya Pradesh">Madhya Pradesh</option>
+                            <option value="Bihar">Bihar</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Haryana">Haryana</option>
+                            <option value="Uttarakhand">Uttarakhand</option>
+                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                            <option value="Jharkhand">Jharkhand</option>
+                            <option value="Odisha">Odisha</option>
+                            <option value="Chhattisgarh">Chhattisgarh</option>
+                            <option value="Assam">Assam</option>
+                            <option value="Kerala">Kerala</option>
+                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Select Interest</label>
+                    <div class="interest-row">
+                        <span class="interest-item"><i class="fas fa-leaf"></i> Wellness Centre</span>
+                        <span class="interest-item"><i class="fas fa-chart-line"></i> 40+Business Opportunities</span>
+                        <span class="interest-item"><i class="fas fa-briefcase"></i> Business ServicesBoth</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Unique Partner Code</label>
+                    <div class="input-wrapper code-wrapper">
+                        <i class="fas fa-key"></i>
+                        <input type="text" placeholder="XXXXXX" id="partnerCode" value="VIDM2025" readonly>
+                    </div>
+                    <div class="unique-code-hint">
+                        <i class="fas fa-chevron-circle-right"></i> instant code upon join (demo)
+                    </div>
+                </div>
+
+                <div class="highlight-strip">
+                    <span class="chip-card"><i class="fas fa-spa"></i> Wellness Centre</span>
+                    <span class="chip-card"><i class="fas fa-store"></i> 40+Business Opp.</span>
+                    <span class="chip-card"><i class="fas fa-handshake"></i> Business ServicesBoth</span>
+                </div>
+
+                <div class="commission-row">
+                    <span class="commission-item"><i class="fas fa-hand-holding-usd"></i> Direct Commission</span>
+                    <span class="commission-item"><i class="fas fa-users"></i> Team Income</span>
+                </div>
+
+                <button class="submit-btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> SUBMIT & START EARNING
+                </button>
+
+                <div style="text-align: center; margin-top: 1.2rem; font-weight: 500; color: #285577;">
+                    <i class="fas fa-shield-alt"></i> 100% Genuine Platform | Training & Support Available
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <div class="partner-code-badge">
+                    <i class="fas fa-qrcode"></i>
+                    <span> YOUR PARTNER CODE: <strong style="background:#e1effa; padding:6px 16px; border-radius:40px;">VIDM25</strong></span>
+                </div>
+
+                <ul class="feature-bullets">
+                    <li><i class="fas fa-circle-check"></i> Wellness Centre partnership</li>
+                    <li><i class="fas fa-bolt"></i> 40+ Business Opportunities</li>
+                    <li><i class="fas fa-globe"></i> Business Services & Both</li>
+                </ul>
+
+                <div class="genuine-tag">
+                    <i class="fas fa-check-circle"></i> 100% Genuine Platform | Training & Support Available
+                </div>
+
+                <div class="contact-block">
+                    <div class="contact-line">
+                        <i class="fas fa-phone-alt"></i>
+                        <span><strong>+91 97951 99119</strong> (Mobile)</span>
+                    </div>
+                    <div class="contact-line">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="mailto:vidmoss1@gmail.com">vidmoss1@gmail.com</a></span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; font-size: 0.85rem; color: #527a9f; display: flex; gap: 8px; align-items: center;">
+                    <i class="fas fa-id-card" style="font-size: 1.4rem;"></i> 
+                    <span>Join VIDMOSS Partner Network – instant code</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 1.8rem; border-top: 1px dashed #c7ddef; padding-top: 1rem; font-size: 0.8rem; color: #597a99; text-align: center;">
+            <i class="fas fa-arrow-right"></i> same as image: partner registration • outline icons • fully responsive • data sent to WhatsApp
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Clear any pre-filled values (keeping partner code readonly)
+            document.getElementById('fullName').value = '';
+            document.getElementById('mobileNo').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('city').selectedIndex = 0;
+            document.getElementById('state').selectedIndex = 0;
+            
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();   // prevent any page reload
+                
+                // Get all field values
+                const name = document.getElementById('fullName').value.trim();
+                const mobile = document.getElementById('mobileNo').value.trim();
+                const email = document.getElementById('email').value.trim();
+                
+                const citySelect = document.getElementById('city');
+                const city = citySelect.options[citySelect.selectedIndex]?.text || 'Not selected';
+                
+                const stateSelect = document.getElementById('state');
+                const state = stateSelect.options[stateSelect.selectedIndex]?.text || 'Not selected';
+                
+                const code = document.getElementById('partnerCode').value || 'VIDM2025';
+
+                // Simple validation
+                if (!name || !mobile || !email || city === 'Not selected' || state === 'Not selected') {
+                    alert('⚠️ Please fill in all fields (Name, Mobile, Email, City, State) before submitting.');
+                    return;
+                }
+
+                // Prepare the message for WhatsApp
+                const message = `*New Partner Registration*%0A%0A` +
+                               `*Name:* ${name}%0A` +
+                               `*Mobile:* ${mobile}%0A` +
+                               `*Email:* ${email}%0A` +
+                               `*City:* ${city}%0A` +
+                               `*State:* ${state}%0A` +
+                               `*Partner Code:* ${code}%0A%0A` +
+                               `From VIDMOSS Partner Network`;
+
+                // WhatsApp number (without + or spaces)
+                const whatsappNumber = '919795199119'; // +91 97951 99119
+                
+                // Create WhatsApp URL
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+                // Optional: Show a confirmation alert before redirecting
+                if (confirm(`Your data is ready to share on WhatsApp.\n\nClick OK to open WhatsApp with prefilled message.`)) {
+                    // Open WhatsApp in a new tab/window
+                    window.open(whatsappUrl, '_blank');
+                    
+                    // Also log to console for demo
+                    console.log('Data sent via WhatsApp:', { name, mobile, email, city, state, code });
+                    
+                    // Little animation
+                    submitBtn.style.transform = 'scale(0.99)';
+                    setTimeout(() => submitBtn.style.transform = '', 120);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

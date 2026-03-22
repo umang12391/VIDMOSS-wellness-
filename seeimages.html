@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>VIDMOSS | Wellness Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #f8fafc;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            color: #0a1e2f;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 0.8rem 2rem;
+            border-bottom: 1px solid #eef2f6;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-area {
+            display: inline-flex;
+            flex-direction: column;
+        }
+
+        .main-brand {
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1F3B4C, #2C5A6E);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .sub-brand {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #5b6e7c;
+            margin-top: -4px;
+        }
+
+        .upload-icon-btn {
+            background: transparent;
+            border: 2px solid #2c5a6e;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #2c5a6e;
+            background: white;
+        }
+
+        .upload-icon-btn:hover {
+            background: #2c5a6e;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .upload-icon-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .gallery-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.8rem;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            justify-items: center;
+            align-items: start;
+        }
+
+        .gallery-card {
+            width: 100%;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            user-select: none;
+        }
+
+        .img-wrapper {
+            width: 100%;
+            background: #f1f5f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            position: relative;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            pointer-events: none;
+        }
+
+        /* Center zone for hold detection - ONLY this area triggers delete */
+        .hold-center-zone {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: rgba(255, 255, 255, 0.01);
+            cursor: pointer;
+            z-index: 20;
+            border-radius: 8px;
+        }
+
+        /* Optional visual hint on hover */
+        .gallery-card:hover .hold-center-zone {
+            background: rgba(44, 90, 110, 0.1);
+            border: 2px dashed rgba(44, 90, 110, 0.3);
+            transition: all 0.2s;
+        }
+
+        .gallery-card.holding {
+            opacity: 0.7;
+            transform: scale(0.98);
+        }
+
+        .empty-gallery {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 2rem;
+            color: #7c8b9c;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .counter-info {
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1rem;
+            color: #5b6e7c;
+            background: white;
+            border-radius: 2rem;
+            display: inline-block;
+        }
+
+        .counter-wrapper {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .progress-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .progress-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #2c5a6e;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 1rem;
+            color: #1f3b4c;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            stroke: #10b981;
+            stroke-width: 2;
+            fill: none;
+            display: none;
+        }
+
+        /* Hold Progress Indicator */
+        .hold-progress {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            pointer-events: none;
+        }
+
+        .hold-progress.active {
+            display: flex;
+        }
+
+        .progress-ring {
+            width: 80px;
+            height: 80px;
+        }
+
+        .progress-ring-circle {
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 188.4;
+            stroke-dashoffset: 188.4;
+            transition: stroke-dashoffset 0.05s linear;
+        }
+
+        .hold-text {
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .center-hint {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 15;
+            font-weight: 500;
+        }
+
+        .gallery-card:hover .center-hint {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.7rem 1.2rem;
+            }
+            .gallery-container {
+                padding: 0 1rem;
+                margin: 1rem auto;
+            }
+            .image-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.2rem;
+            }
+            .main-brand {
+                font-size: 1.4rem;
+            }
+            .upload-icon-btn {
+                width: 42px;
+                height: 42px;
+            }
+            .upload-icon-btn svg {
+                width: 22px;
+                height: 22px;
+            }
+            .hold-center-zone {
+                width: 70%;
+                height: 70%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="brand-area">
+        <div class="main-brand">VIDMOSS</div>
+        <div class="sub-brand">Wellness Gallery</div>
+    </div>
+    <button class="upload-icon-btn" id="uploadBtn">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 13a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v2a4 4 0 0 0 4 4h2a4 4 0 0 0 4-4v-2z" />
+            <path d="M16 9V7a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h2" />
+            <line x1="12" y1="13" x2="12" y2="17" />
+            <polyline points="9 16 12 19 15 16" />
+        </svg>
+    </button>
+    <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+</nav>
+
+<div class="gallery-container">
+    <div id="galleryGrid" class="image-grid"></div>
+    <div id="emptyState" class="empty-gallery">
+        <svg width="64" height="64" viewBox="0 0 24 24" stroke="#9ca3af" stroke-width="1.5" fill="none" style="margin-bottom: 1rem;">
+            <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="10.5" r="2.5"></circle>
+            <path d="M21 15l-5-4-3 3-4-4-5 5"></path>
+        </svg>
+        <div style="margin-bottom: 0.5rem;">No images yet</div>
+        <div style="font-size: 0.85rem;">Click the upload icon to add photos (up to 20 at once)</div>
+    </div>
+    <div class="counter-wrapper">
+        <div id="counterInfo" class="counter-info"></div>
+    </div>
+</div>
+
+<div id="progressModal" class="progress-modal">
+    <div class="progress-card">
+        <svg class="success-icon" id="successIcon" viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12" stroke="currentColor" fill="none" stroke-width="2"/>
+        </svg>
+        <div id="progressText" class="progress-text">Uploading images...</div>
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <div id="progressCount" style="font-size: 0.9rem; color: #6c8da3;">0 / 0</div>
+    </div>
+</div>
+
+<!-- Hold Progress Indicator -->
+<div id="holdProgress" class="hold-progress">
+    <svg class="progress-ring" viewBox="0 0 80 80">
+        <circle cx="40" cy="40" r="30" stroke="rgba(255,255,255,0.3)" stroke-width="3" fill="none"/>
+        <circle class="progress-ring-circle" cx="40" cy="40" r="30" stroke="white" stroke-width="3" fill="none"/>
+    </svg>
+    <div class="hold-text">0%</div>
+</div>
+
+<script>
+    let allImages = [];
+    let currentHoldImage = null;
+    let currentHoldImageId = null;
+    let holdStartTime = 0;
+    let animationFrame = null;
+    let isHolding = false;
+    let startX = 0, startY = 0;
+    let activeHoldZone = null;
+    
+    const HOLD_DURATION = 5000; // 5 seconds
+    
+    const galleryGrid = document.getElementById('galleryGrid');
+    const emptyState = document.getElementById('emptyState');
+    const counterInfo = document.getElementById('counterInfo');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const fileInput = document.getElementById('fileInput');
+    const progressModal = document.getElementById('progressModal');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const progressCount = document.getElementById('progressCount');
+    const successIcon = document.getElementById('successIcon');
+    const holdProgress = document.getElementById('holdProgress');
+    const progressRingCircle = document.querySelector('.progress-ring-circle');
+    const holdText = document.querySelector('.hold-text');
+    
+    function loadSavedImages() {
+        const saved = localStorage.getItem('vidmoss_gallery');
+        if (saved) {
+            try {
+                allImages = JSON.parse(saved);
+            } catch(e) {
+                allImages = [];
+            }
+        }
+        displayImages();
+    }
+    
+    function saveImages() {
+        localStorage.setItem('vidmoss_gallery', JSON.stringify(allImages));
+        updateCounter();
+    }
+    
+    function updateCounter() {
+        const count = allImages.length;
+        if (count === 0) {
+            counterInfo.innerHTML = '';
+        } else {
+            counterInfo.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" stroke="#5b6e7c" stroke-width="1.5" fill="none" style="display: inline-block; vertical-align: middle; margin-right: 6px;">
+                    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    <path d="M8 2v4M16 2v4M3 8h18"></path>
+                </svg>
+                ${count} ${count === 1 ? 'image' : 'images'}
+            `;
+        }
+    }
+    
+    function deleteImageById(imageId) {
+        const index = allImages.findIndex(img => img.id === imageId);
+        if (index !== -1) {
+            allImages.splice(index, 1);
+            saveImages();
+            displayImages();
+        }
+    }
+    
+    function updateProgressCircle(progress) {
+        const circumference = 188.4;
+        const offset = circumference * (1 - Math.min(1, progress));
+        if (progressRingCircle) {
+            progressRingCircle.style.strokeDashoffset = offset;
+        }
+        if (holdText) {
+            holdText.textContent = `${Math.round(progress * 100)}%`;
+        }
+    }
+    
+    function startHold(card, imageId, clientX, clientY, holdZoneElement) {
+        if (isHolding) return;
+        isHolding = true;
+        holdStartTime = Date.now();
+        currentHoldImage = card;
+        currentHoldImageId = imageId;
+        activeHoldZone = holdZoneElement;
+        
+        holdProgress.classList.add('active');
+        holdProgress.style.left = (clientX - 45) + 'px';
+        holdProgress.style.top = (clientY - 45) + 'px';
+        
+        function updateProgress() {
+            if (!isHolding) return;
+            const elapsed = Date.now() - holdStartTime;
+            const progress = Math.min(1, elapsed / HOLD_DURATION);
+            updateProgressCircle(progress);
+            
+            if (progress >= 1) {
+                finishHoldAndDelete();
+            } else {
+                animationFrame = requestAnimationFrame(updateProgress);
+            }
+        }
+        animationFrame = requestAnimationFrame(updateProgress);
+    }
+    
+    function finishHoldAndDelete() {
+        if (!isHolding) return;
+        cancelHold();
+        
+        if (currentHoldImageId) {
+            if (confirm('Delete this image?')) {
+                deleteImageById(currentHoldImageId);
+            }
+        }
+        
+        currentHoldImage = null;
+        currentHoldImageId = null;
+        activeHoldZone = null;
+    }
+    
+    function cancelHold() {
+        if (animationFrame) {
+            cancelAnimationFrame(animationFrame);
+            animationFrame = null;
+        }
+        isHolding = false;
+        holdProgress.classList.remove('active');
+        updateProgressCircle(0);
+        if (currentHoldImage) {
+            currentHoldImage.classList.remove('holding');
+        }
+        activeHoldZone = null;
+    }
+    
+    function onHoldZonePointerDown(e, imageId, card, holdZone) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        let clientX, clientY;
+        if (e.touches) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+        
+        startHold(card, imageId, clientX, clientY, holdZone);
+        startX = clientX;
+        startY = clientY;
+        card.classList.add('holding');
+    }
+    
+    function onGlobalPointerMove(e) {
+        if (!isHolding) return;
+        
+        let clientX, clientY;
+        if (e.touches) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+        
+        if (holdProgress.classList.contains('active')) {
+            holdProgress.style.left = (clientX - 45) + 'px';
+            holdProgress.style.top = (clientY - 45) + 'px';
+        }
+        
+        const moveDistance = Math.hypot(clientX - startX, clientY - startY);
+        if (moveDistance > 20 && isHolding) {
+            cancelHold();
+        }
+    }
+    
+    function onGlobalPointerUp() {
+        if (isHolding) {
+            cancelHold();
+        }
+    }
+    
+    function displayImages() {
+        galleryGrid.innerHTML = '';
+        
+        if (allImages.length === 0) {
+            emptyState.style.display = 'block';
+            updateCounter();
+            return;
+        }
+        
+        emptyState.style.display = 'none';
+        
+        for (let i = 0; i < allImages.length; i++) {
+            const imgData = allImages[i];
+            
+            const card = document.createElement('div');
+            card.className = 'gallery-card';
+            card.setAttribute('data-id', imgData.id);
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'img-wrapper';
+            wrapper.style.position = 'relative';
+            
+            const img = document.createElement('img');
+            img.className = 'gallery-img';
+            img.src = imgData.url;
+            img.alt = 'Gallery image';
+            img.style.width = '100%';
+            img.style.height = 'auto';
+            
+            img.onerror = function() {
+                wrapper.style.backgroundColor = '#fee2e2';
+                wrapper.innerHTML = '<div style="padding: 2rem; text-align: center; color: #dc2626;">Failed to load</div>';
+            };
+            
+            // Create center hold zone - ONLY this area triggers delete
+            const holdZone = document.createElement('div');
+            holdZone.className = 'hold-center-zone';
+            
+            // Store the imageId and card reference
+            holdZone.addEventListener('mousedown', (e) => onHoldZonePointerDown(e, imgData.id, card, holdZone));
+            holdZone.addEventListener('touchstart', (e) => onHoldZonePointerDown(e, imgData.id, card, holdZone), { passive: false });
+            
+            // Add hint text
+            const hint = document.createElement('div');
+            hint.className = 'center-hint';
+            hint.textContent = '⏺ Hold center 5s to delete';
+            
+            wrapper.appendChild(img);
+            wrapper.appendChild(holdZone);
+            wrapper.appendChild(hint);
+            card.appendChild(wrapper);
+            galleryGrid.appendChild(card);
+        }
+        
+        // Add global move and up listeners
+        document.removeEventListener('mousemove', onGlobalPointerMove);
+        document.removeEventListener('touchmove', onGlobalPointerMove);
+        document.removeEventListener('mouseup', onGlobalPointerUp);
+        document.removeEventListener('touchend', onGlobalPointerUp);
+        
+        document.addEventListener('mousemove', onGlobalPointerMove);
+        document.addEventListener('touchmove', onGlobalPointerMove, { passive: false });
+        document.addEventListener('mouseup', onGlobalPointerUp);
+        document.addEventListener('touchend', onGlobalPointerUp);
+        
+        updateCounter();
+    }
+    
+    function addImage(imageUrl) {
+        const imageId = Date.now() + '-' + Math.random().toString(36).substr(2, 8);
+        allImages.unshift({
+            id: imageId,
+            url: imageUrl,
+            timestamp: Date.now()
+        });
+    }
+    
+    function uploadSingleImage(file) {
+        return new Promise((resolve, reject) => {
+            if (!file.type.startsWith('image/')) {
+                reject('Not an image');
+                return;
+            }
+            
+            if (file.size > 50 * 1024 * 1024) {
+                reject('File too large');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                addImage(e.target.result);
+                resolve(true);
+            };
+            reader.onerror = function() {
+                reject('Read error');
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+    
+    async function uploadMultipleImages(files) {
+        const maxImages = 20;
+        let filesToUpload = files.slice(0, maxImages);
+        
+        if (files.length > maxImages) {
+            alert(`You selected ${files.length} images. Only first ${maxImages} will be uploaded.`);
+        }
+        
+        progressModal.style.display = 'flex';
+        progressBar.style.width = '0%';
+        successIcon.style.display = 'none';
+        progressText.textContent = 'Uploading images...';
+        progressText.style.color = '#1f3b4c';
+        
+        let completed = 0;
+        let successful = 0;
+        
+        for (let i = 0; i < filesToUpload.length; i++) {
+            progressText.textContent = `Uploading ${i + 1} of ${filesToUpload.length}...`;
+            progressCount.textContent = `${i + 1} / ${filesToUpload.length}`;
+            
+            try {
+                await uploadSingleImage(filesToUpload[i]);
+                successful++;
+            } catch(error) {
+                console.error('Error:', error);
+            }
+            
+            completed++;
+            progressBar.style.width = (completed / filesToUpload.length) * 100 + '%';
+        }
+        
+        saveImages();
+        displayImages();
+        
+        progressText.textContent = `✅ ${successful} of ${filesToUpload.length} images uploaded!`;
+        progressText.style.color = '#10b981';
+        successIcon.style.display = 'block';
+        progressCount.textContent = '';
+        
+        setTimeout(() => {
+            progressModal.style.display = 'none';
+            progressBar.style.width = '0%';
+        }, 2000);
+    }
+    
+    function onFileSelect(event) {
+        const files = Array.from(event.target.files);
+        if (files.length > 0) {
+            uploadMultipleImages(files);
+            fileInput.value = '';
+        }
+    }
+    
+    uploadBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+    
+    fileInput.addEventListener('change', onFileSelect);
+    
+    loadSavedImages();
+</script>
+</body>
+</html>

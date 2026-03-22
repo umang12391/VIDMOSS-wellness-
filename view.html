@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>AyurExplore | Start Earning</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ffffff;
+      font-family: system-ui, 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* image container - full width, 3:4 aspect ratio */
+    .image-container {
+      width: 100%;
+      background-color: #f5f2e8;
+      position: relative;
+      aspect-ratio: 3 / 4;
+    }
+
+    .image-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* button section - no box */
+    .button-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1.5rem 3rem 1.5rem;
+      background: #ffffff;
+      width: 100%;
+    }
+
+    /* EXPLORE & START EARNING button - outline icon style */
+    .explore-btn {
+      background: linear-gradient(105deg, #1a5d3c 0%, #0f4a2f 100%);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 60px;
+      width: 100%;
+      max-width: 380px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 10px 22px rgba(26, 93, 60, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .explore-btn:hover {
+      transform: scale(1.02);
+      background: linear-gradient(105deg, #236f48 0%, #115f38 100%);
+      box-shadow: 0 14px 28px rgba(26, 93, 60, 0.4);
+    }
+
+    .explore-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* outline icon style for button arrow */
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: normal;
+      transition: transform 0.2s;
+    }
+
+    .explore-btn:hover .btn-icon {
+      transform: translateX(5px);
+    }
+
+    /* ---------- POPUP MODAL (form) ---------- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.2s, opacity 0.25s ease;
+    }
+
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .form-popup {
+      background: #ffffff;
+      max-width: 480px;
+      width: 90%;
+      border-radius: 2rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4);
+      padding: 1.8rem 1.5rem 2rem 1.5rem;
+      position: relative;
+      transform: scale(0.96);
+      transition: transform 0.2s ease;
+    }
+
+    .modal-overlay.active .form-popup {
+      transform: scale(1);
+    }
+
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #e9e2d4;
+      padding-bottom: 0.75rem;
+    }
+
+    .form-header h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1a5d3c, #2a7f52);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* outline icon style for header */
+    .header-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: normal;
+      color: #1a5d3c;
+    }
+
+    .close-modal {
+      background: #f0eeea;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      width: 38px;
+      height: 38px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+      color: #3a2c1f;
+    }
+
+    .close-modal:hover {
+      background: #e0d8cc;
+      transform: rotate(90deg);
+    }
+
+    /* form styling */
+    .input-group {
+      margin-bottom: 1.3rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-group label {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: #2c3e2b;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* outline style for label icons */
+    .label-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #1a5d3c;
+    }
+
+    .input-group input,
+    .input-group textarea {
+      padding: 0.9rem 1rem;
+      border: 1.5px solid #ddd8ce;
+      border-radius: 20px;
+      font-size: 1rem;
+      background: #fefcf8;
+      transition: 0.2s;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus {
+      border-color: #1a5d3c;
+      box-shadow: 0 0 0 3px rgba(26, 93, 60, 0.2);
+    }
+
+    .input-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .submit-btn {
+      background: #1a5d3c;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 50px;
+      margin-top: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .submit-btn:hover {
+      background: #0f4a2f;
+      transform: translateY(-2px);
+    }
+
+    /* outline icon for submit button */
+    .submit-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .footer-note {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1rem;
+      color: #8a7a64;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .footer-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #8a7a64;
+    }
+
+    @media (max-width: 550px) {
+      .button-section {
+        padding: 1.5rem 1rem 2rem 1rem;
+      }
+      .explore-btn {
+        font-size: 1.2rem;
+        padding: 0.85rem 1.2rem;
+        max-width: 340px;
+      }
+      .form-popup {
+        padding: 1.5rem;
+      }
+      .form-header h3 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Full width image with 3:4 aspect ratio at top -->
+  <div class="image-container">
+    <img src="viewdiagnostic.jpg" alt="Ayurveda Therapies & Diseases" onerror="this.onerror=null; this.src='https://placehold.co/900x1200/e9e3d5/2c5a3e?text=viewdiagnostic.jpg+LOAD+IMAGE'; console.warn('Please place viewdiagnostic.jpg in same folder')">
+  </div>
+
+  <!-- Only button below image, no box, no extra details -->
+  <div class="button-section">
+    <button class="explore-btn" id="openFormBtn">
+      EXPLORE & START EARNING
+      <span class="btn-icon">→</span>
+    </button>
+  </div>
+
+  <!-- POPUP MODAL: form for lead details -->
+  <div id="formModal" class="modal-overlay">
+    <div class="form-popup">
+      <div class="form-header">
+        <h3>
+          <span class="header-icon">📄</span>
+          Partner Registration
+        </h3>
+        <button class="close-modal" id="closeModalBtn">×</button>
+      </div>
+      <form id="leadForm">
+        <div class="input-group">
+          <label>
+            <span class="label-icon">👤</span>
+            Full Name *
+          </label>
+          <input type="text" id="fullName" placeholder="Enter your full name" required>
+        </div>
+        <div class="input-group">
+          <label>
+            <span class="label-icon">💬</span>
+            WhatsApp Number *
+          </label>
+          <input type="tel" id="whatsappNumber" placeholder="+91 98765 43210" required>
+        </div>
+        <div class="input-group">
+          <label>
+            <span class="label-icon">✉️</span>
+            Email (optional)
+          </label>
+          <input type="email" id="email" placeholder="you@example.com">
+        </div>
+        <div class="input-group">
+          <label>
+            <span class="label-icon">📍</span>
+            City / Location
+          </label>
+          <input type="text" id="location" placeholder="e.g., Delhi, Mumbai">
+        </div>
+        <div class="input-group">
+          <label>
+            <span class="label-icon">🌿</span>
+            Interested Therapy (optional)
+          </label>
+          <textarea id="interest" rows="2" placeholder="Panchakarma, Abhyanga, etc..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">
+          <span class="submit-icon">📲</span>
+          Submit & Get Details on WhatsApp
+        </button>
+        <div class="footer-note">
+          <span class="footer-icon">ℹ️</span>
+          We'll send partner code & earning guide directly on WhatsApp
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const modal = document.getElementById('formModal');
+      const openBtn = document.getElementById('openFormBtn');
+      const closeBtn = document.getElementById('closeModalBtn');
+      const form = document.getElementById('leadForm');
+
+      function openModal() {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      openBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+
+      closeBtn.addEventListener('click', () => {
+        closeModal();
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Handle form submission - auto generate details and send to image number (09795199119)
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const nameInput = document.getElementById('fullName');
+        const whatsappInput = document.getElementById('whatsappNumber');
+        const emailInput = document.getElementById('email');
+        const locationInput = document.getElementById('location');
+        const interestInput = document.getElementById('interest');
+
+        const fullName = nameInput.value.trim();
+        const whatsapp = whatsappInput.value.trim();
+        const email = emailInput.value.trim();
+        const location = locationInput.value.trim();
+        const interest = interestInput.value.trim();
+
+        if (!fullName) {
+          alert("Please enter your Full Name.");
+          nameInput.focus();
+          return;
+        }
+        if (!whatsapp) {
+          alert("Please enter your WhatsApp Number to receive details.");
+          whatsappInput.focus();
+          return;
+        }
+
+        const phoneDigits = whatsapp.replace(/\D/g, '');
+        if (phoneDigits.length < 8 || phoneDigits.length > 15) {
+          alert("Please enter a valid WhatsApp number (8 to 15 digits).");
+          whatsappInput.focus();
+          return;
+        }
+
+        // Generate Partner Code (Ek'Unique style)
+        const nameCode = fullName.replace(/\s/g, '').slice(0, 4).toUpperCase() || 'PART';
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
+        const partnerCode = `EK-${nameCode}${randomNum}`;
+
+        // Build auto-generated details exactly as per image content (Top 10 Therapies & Diseases)
+        const therapyList = `[TOP 10 AYURVEDA THERAPIES]\n1. Panchakarma Therapy\n2. Abhyanga (Oil Massage Therapy)\n3. Shirodhara Therapy\n4. Swedana (Steam Therapy)\n5. Basti Therapy\n6. Nasya Therapy\n7. Kati Basti (Back Pain Therapy)\n8. Pizhichil Therapy\n9. Udvartana (Weight Loss Powder Massage)\n10. Netra Tarpan (Eye Therapy)`;
+        
+        const diseaseList = `[TOP 10 DISEASES MANAGED]\n- Diabetes (Sugar)\n- Joint Pain / Arthritis\n- Paralysis (Pakshaghat)\n- Slip Disc / Spine Problems\n- Obesity (Weight Loss)\n- Stress / Anxiety / Depression\n- Skin Diseases (Psoriasis, Eczema)\n- Liver Disorders\n- PCOD / Female Hormonal issues\n- Migraine / Chronic`;
+        
+        const commissionMsg = `[COMMISSION & INCENTIVE]\n- Direct Commission on every therapy booking\n- Performance Incentives & Bonus\n- Exclusive Partner Code: ${partnerCode}\n- Use this code to track earnings & get rewards.`;
+        
+        const supportContact = `[SUPPORT & CONTACT]\nPhone: 09795199119  |  Email: vidmoss1@gmail.com`;
+        
+        const greeting = `*Welcome, ${fullName}!*\n\nThank you for showing interest in Ayurveda Therapies & Earning Program.\n\n${therapyList}\n\n${diseaseList}\n\n${commissionMsg}\n\n[YOUR DETAILS]\nName: ${fullName}\nWhatsApp: ${whatsapp}\n${email ? `Email: ${email}\n` : ''}${location ? `Location: ${location}\n` : ''}${interest ? `Interest: ${interest}\n` : ''}\n${supportContact}\n\n[NEXT STEPS]\n1. Share this partner code with clients.\n2. Earn commission on Panchakarma, Abhyanga, Basti, etc.\n3. Contact us for any guidance.\n\nEk'Unique Partner Program – Start Earning Today!`;
+        
+        // Target WhatsApp number from image: 09795199119
+        // Convert to international format: remove leading zero and add 91
+        const businessNumber = "919795199119";
+        
+        const finalMessage = `[NEW PARTNER LEAD FROM WEBSITE]\n\n${greeting}\n\n---\nAuto-generated Timestamp: ${new Date().toString()}\nPartner Program: Ek'Unique Partner Code Earnings`;
+        
+        const encodedMsg = encodeURIComponent(finalMessage);
+        const whatsappUrl = `https://wa.me/${businessNumber}?text=${encodedMsg}`;
+        
+        const submitBtn = form.querySelector('.submit-btn');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="submit-icon">⏳</span> Sending details...';
+        submitBtn.disabled = true;
+        
+        try {
+          // Open WhatsApp with pre-filled message to the image number (business)
+          window.open(whatsappUrl, '_blank');
+          
+          alert(`Details sent successfully to Ayurveda Partner Center!\n\nPartner Code: ${partnerCode}\nA WhatsApp chat will open. Just tap SEND to share your interest.\nWe'll contact you soon.`);
+          
+          form.reset();
+          closeModal();
+        } catch (err) {
+          console.error("Error opening WhatsApp:", err);
+          alert("Could not open WhatsApp. Please ensure WhatsApp is installed or try again.");
+        } finally {
+          submitBtn.innerHTML = originalBtnText;
+          submitBtn.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

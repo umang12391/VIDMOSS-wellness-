@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>VIDMOSS AI | Smart Wellness Assistant</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f5f7f2;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* modern navbar */
+.navbar {
+  padding: 12px 20px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03), 0 1px 0 #e2e8e0;
+  flex-shrink: 0;
+  backdrop-filter: blur(0px);
+}
+
+.nav-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.logo {
+  color: #166534;
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  background: linear-gradient(135deg, #166534 0%, #2b7a4b 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.badge {
+  background: #eef5ea;
+  padding: 4px 10px;
+  border-radius: 40px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #166534;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+}
+
+.lead-btn-nav {
+  background: #166534;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 60px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(22, 101, 52, 0.2);
+  white-space: nowrap;
+}
+
+.lead-btn-nav:hover {
+  background: #0f4a2d;
+  transform: scale(0.97);
+}
+
+/* chat container - fluid scroll */
+.chat-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #ffffff;
+  scroll-behavior: smooth;
+}
+
+/* message bubbles with max-width desktop friendly */
+.message {
+  max-width: 82%;
+  padding: 12px 18px;
+  border-radius: 26px;
+  line-height: 1.45;
+  font-size: 0.95rem;
+  word-break: break-word;
+  white-space: pre-wrap;
+  animation: fadeSlide 0.2s ease;
+}
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(6px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.user {
+  background: #166534;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.bot {
+  background: #f1f4ef;
+  color: #1a2c1a;
+  border-bottom-left-radius: 6px;
+  border: 1px solid #e2e7de;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.02);
+}
+
+/* horizontal slider - perfectly touch optimized */
+.suggestions-slider {
+  background: #ffffff;
+  border-top: 1px solid #e2eddf;
+  border-bottom: 1px solid #e2eddf;
+  padding: 12px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  flex-shrink: 0;
+  scrollbar-width: thin;
+}
+
+.suggestions-slider::-webkit-scrollbar {
+  height: 4px;
+}
+.suggestions-slider::-webkit-scrollbar-track {
+  background: #eef2ea;
+  border-radius: 10px;
+}
+.suggestions-slider::-webkit-scrollbar-thumb {
+  background: #9bbf8f;
+  border-radius: 10px;
+}
+
+.slider-buttons {
+  display: inline-flex;
+  gap: 12px;
+  padding: 0 20px;
+}
+
+.slider-buttons button {
+  background: #f9fbf7;
+  border: 1px solid #cde2cf;
+  padding: 8px 22px;
+  border-radius: 60px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #166534;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  backdrop-filter: blur(2px);
+  font-family: inherit;
+}
+
+.slider-buttons button:active {
+  transform: scale(0.96);
+  background: #e9f3e5;
+  border-color: #166534;
+}
+
+/* input area compact but comfy */
+.input-area {
+  display: flex;
+  border-top: 1px solid #e0eae0;
+  background: white;
+  padding: 12px 20px;
+  gap: 12px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+input {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 48px;
+  border: 1.5px solid #d2e2d2;
+  font-size: 0.95rem;
+  outline: none;
+  background: #ffffff;
+  transition: 0.2s;
+  font-family: inherit;
+}
+
+input:focus {
+  border-color: #166534;
+  box-shadow: 0 0 0 3px rgba(22, 101, 52, 0.2);
+}
+
+button.send {
+  background: #166534;
+  color: white;
+  border: none;
+  border-radius: 48px;
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+button.send:hover {
+  background: #0f4a2d;
+}
+
+/* desktop & tablet fine-tuning */
+@media (min-width: 768px) {
+  .chat-container {
+    padding: 28px 32px;
+  }
+  .message {
+    max-width: 70%;
+    font-size: 1rem;
+    padding: 14px 22px;
+  }
+  .navbar {
+    padding: 14px 32px;
+  }
+  .logo {
+    font-size: 1.9rem;
+  }
+  .input-area {
+    padding: 16px 32px;
+  }
+  input {
+    font-size: 1rem;
+  }
+  .slider-buttons button {
+    padding: 10px 26px;
+    font-size: 0.9rem;
+  }
+}
+
+/* for smaller mobile (<=480px) comfortable touch targets */
+@media (max-width: 560px) {
+  .navbar {
+    padding: 8px 16px;
+  }
+  .logo {
+    font-size: 1.4rem;
+  }
+  .lead-btn-nav {
+    padding: 6px 14px;
+    font-size: 0.75rem;
+  }
+  .message {
+    max-width: 92%;
+    font-size: 0.88rem;
+    padding: 10px 16px;
+  }
+  .slider-buttons button {
+    padding: 6px 18px;
+    font-size: 0.75rem;
+  }
+  .input-area {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  input {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+  button.send {
+    padding: 10px 18px;
+    font-size: 0.8rem;
+  }
+  .badge {
+    font-size: 0.65rem;
+  }
+}
+
+/* For extra small devices in landscape mode */
+@media (max-width: 480px) and (orientation: landscape) {
+  .chat-container {
+    max-height: 55vh;
+  }
+  .navbar {
+    min-height: 52px;
+  }
+}
+
+/* custom scroll */
+.chat-container::-webkit-scrollbar {
+  width: 5px;
+}
+.chat-container::-webkit-scrollbar-track {
+  background: #eef2ec;
+}
+.chat-container::-webkit-scrollbar-thumb {
+  background: #bdd6b5;
+  border-radius: 12px;
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="nav-left">
+    <div class="logo">VIDMOSS</div>
+    <div class="badge">
+      <span>⚡ AI HELP AGENT</span>
+      <span>• 20 SMART Q&A</span>
+    </div>
+  </div>
+  <div class="nav-actions">
+    <button class="lead-btn-nav" id="whatsappLeadBtn">
+      🎯 REGISTER INTEREST
+    </button>
+  </div>
+</div>
+
+<div id="chat" class="chat-container"></div>
+
+<!-- Scrollable suggestion row (20 questions) -->
+<div class="suggestions-slider">
+  <div class="slider-buttons" id="sliderButtons"></div>
+</div>
+
+<div class="input-area">
+  <input id="input" type="text" placeholder="Ask anything about VIDMOSS business, joining, earning..." autocomplete="off">
+  <button class="send" onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+// ==================== WHATSAPP LEAD CAPTURE ====================
+function sendToWhatsAppLead() {
+  const phoneNumber = "919795199119";
+  let userName = prompt("🔐 Register Interest - VIDMOSS Expert Connect\n\nEnter your Full Name:");
+  if (!userName) {
+    const genericMsg = "Hello VIDMOSS Team! I'm interested in VIDMOSS business & wellness opportunity. Please send joining guide & call me back.";
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(genericMsg)}`, '_blank');
+    addMessage("📱 Redirecting to WhatsApp expert ... Please share your details there for quick response.", "bot");
+    return;
+  }
+  let userMobile = prompt("📱 Enter your Mobile Number (10 digits) for expert callback & guide:");
+  if (!userMobile) {
+    const msg = `Hello VIDMOSS Team! My name is ${userName}. I'm interested in VIDMOSS joining, earning plan and wellness services. Please send joining guide.`;
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+    addMessage(`✅ Thanks ${userName}! WhatsApp opened. Expert will assist you shortly.`, "bot");
+    return;
+  }
+  let userCity = prompt("🏙️ Your City (optional):");
+  let cityText = userCity ? `City: ${userCity}` : "";
+  const fullMessage = `Hello VIDMOSS Team! 🙏\n\nName: ${userName}\nMobile: ${userMobile}\n${cityText}\n\nI want to register interest for VIDMOSS business. Please send FREE JOINING GUIDE, earning structure and expert callback details. Ready to start! 🚀`;
+  window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(fullMessage)}`, '_blank');
+  addMessage(`✅ Awesome ${userName}! Your interest shared via WhatsApp to VIDMOSS expert (+91 97951 99119). Expert will reach out shortly with joining guide.`, "bot");
+}
+
+document.getElementById("whatsappLeadBtn").addEventListener("click", sendToWhatsAppLead);
+
+// ==================== 20 SMART Q&A RESPONSES (DETAILED & HINGLISH) ====================
+function getBotResponse(msg) {
+  let lowerMsg = msg.toLowerCase().trim();
+
+  // 1. VIDMOSS kya hai?
+  if (lowerMsg.includes("vidmoss kya") || lowerMsg.includes("what is vidmoss") || (lowerMsg.includes("vidmoss") && (lowerMsg.includes("batao") || lowerMsg.includes("about")))) {
+    return "🌿 VIDMOSS ek premium Wellness + Business Ecosystem hai. Yoga, Spa, Ayurveda, Fitness aur Holistic Health services ke saath ek direct earning platform. Aap services provide karo ya team build karo — dono me income!";
+  }
+  
+  // 2. Kya mai VIDMOSS ke sath kaam kar sakta hu?
+  if ((lowerMsg.includes("kaam kar") || lowerMsg.includes("work")) && (lowerMsg.includes("vidmoss") || lowerMsg.includes("sath"))) {
+    return "✅ Haan! Student ho ya professional, housewife ya business owner — koi bhi VIDMOSS ke saath part-time ya full-time partner ban sakta hai. Zero prior experience needed.";
+  }
+  
+  // 3. Joining ka process kya hai?
+  if (lowerMsg.includes("joining") || lowerMsg.includes("process") || lowerMsg.includes("kaise join") || lowerMsg.includes("join kaise")) {
+    return "📌 Simple 3-step:\n1️⃣ Contact VIDMOSS mentor ya website register\n2️⃣ Basic KYC & plan selection\n3️⃣ ID activation + training access\nFir aap earning start kar sakte ho.";
+  }
+  
+  // 4. Joining fees kitni hai?
+  if (lowerMsg.includes("fees") || lowerMsg.includes("kitna paisa") || lowerMsg.includes("joining cost") || lowerMsg.includes("price") || lowerMsg.includes("fees kitni")) {
+    return "💰 VIDMOSS me alag-alag plans hote hain (₹6500 – ₹11500 approx) jo aapko business kit, training aur digital support provide karte hain. Ek baar ki investment, lifetime opportunity.";
+  }
+  
+  // 5. Isme earning kaise hoti hai?
+  if ((lowerMsg.includes("earning") || lowerMsg.includes("income") || lowerMsg.includes("paise kaise")) && (lowerMsg.includes("hoti") || lowerMsg.includes("milega"))) {
+    return "💸 Aap multiple ways se kama sakte ho:\n• Service commission (wellness bookings)\n• Direct referral bonus\n• Team building incentives\n• Royalty & leadership perks";
+  }
+  
+  // 6. Kya ye MLM hai?
+  if (lowerMsg.includes("mlm") || lowerMsg.includes("chain marketing") || lowerMsg.includes("pyramid")) {
+    return "🟢 VIDMOSS traditional MLM nahi hai. Ye service-based performance model hai. Aapki income directly aapki services sales aur team performance par depend karti hai, koi joining fee cycle nahi.";
+  }
+  
+  // 7. Mujhe kya kaam karna hoga?
+  if ((lowerMsg.includes("kaam karna") || lowerMsg.includes("work kya") || lowerMsg.includes("kya kaam")) && !lowerMsg.includes("center")) {
+    return "📋 Role:\n• Wellness services promote karna\n• Apne area me clients add karna\n• Team members guide karna\n• VIDMOSS brand awareness spread karna";
+  }
+  
+  // 8. Kya bina experience ke kaam kar sakte hain?
+  if (lowerMsg.includes("bina experience") || lowerMsg.includes("no experience") || lowerMsg.includes("without experience")) {
+    return "🌟 Bilkul! VIDMOSS complete training module provide karta hai — online sessions, mentorship aur support group se aap expert ban sakte ho.";
+  }
+  
+  // 9. Daily kitna time dena padega?
+  if (lowerMsg.includes("time") || lowerMsg.includes("ghante") || lowerMsg.includes("hours") || lowerMsg.includes("daily kitna")) {
+    return "⏰ Flexible: Part-time mode me 2–3 hours/day enough hai. Full-time entrepreneurs 6–8 hours dedicate karte hain. Aapke goals par depend hai.";
+  }
+  
+  // 10. Income kitni ho sakti hai?
+  if ((lowerMsg.includes("income kitni") || lowerMsg.includes("earning kitni") || lowerMsg.includes("kitni income")) && !lowerMsg.includes("center")) {
+    return "📊 Unlimited earning potential. Starting level me ₹10k–₹25k/month, experienced leaders ₹50k–₹2L+ per month kama rahe hain. Team build karo, income scale karo.";
+  }
+  
+  // 11. Payment kaise milega?
+  if (lowerMsg.includes("payment") || lowerMsg.includes("bank") || lowerMsg.includes("transfer") || lowerMsg.includes("kaise milega")) {
+    return "🏦 All payments direct bank transfer / UPI / digital mode se milte hain. Weekly & monthly payout cycle, transparent ledger system.";
+  }
+  
+  // 12. Kya mujhe center open karna padega?
+  if (lowerMsg.includes("center open") || lowerMsg.includes("open karna padega") || lowerMsg.includes("physical center")) {
+    return "🏢 Not mandatory. Aap digital model se bhi business kar sakte ho. Lekin agar aap chahe to VIDMOSS Wellness Center open karke premium setup kar sakte ho — higher credibility aur income.";
+  }
+  
+  // 13. Center open karne me kitna investment lagega?
+  if ((lowerMsg.includes("center") && (lowerMsg.includes("investment") || lowerMsg.includes("lagat") || lowerMsg.includes("kitna paisa")))) {
+    return "💵 Depend karta hai location aur size par: Mini studio setup ~₹3–5 lakh, standard wellness center ~₹8–15 lakh tak. VIDMOSS support & branding assistance milti hai.";
+  }
+  
+  // 14. Kya ye safe aur legal hai?
+  if (lowerMsg.includes("legal") || lowerMsg.includes("safe") || lowerMsg.includes("government") || (lowerMsg.includes("sahi") && lowerMsg.includes("hai"))) {
+    return "✅ Haan! VIDMOSS registered entity hai jo wellness services sector me operate karta hai. Fully compliant with Indian business norms, service tax & GST structure.";
+  }
+  
+  // 15. Kya students bhi join kar sakte hain?
+  if (lowerMsg.includes("student") || lowerMsg.includes("college") || lowerMsg.includes("students")) {
+    return "🎓 Yes! Students ke liye best side hustle. Skill development + financial freedom milti hai. College ke saath part-time VIDMOSS partner ban sakte ho.";
+  }
+  
+  // 16. Training kaise milegi?
+  if (lowerMsg.includes("training") || lowerMsg.includes("sikhna") || lowerMsg.includes("learn")) {
+    return "📚 Aapko milega:\n• Live webinar training\n• Video library & toolkit\n• Regional mentor support\n• Monthly skill development sessions";
+  }
+  
+  // 17. Kya mujhe products bechne honge?
+  if (lowerMsg.includes("products") || lowerMsg.includes("bechna") || lowerMsg.includes("sell product")) {
+    return "🧴 VIDMOSS me core focus services (Yoga, Spa, Ayurveda consultations) par hai. Products optional add-on hain, mandatory nahi. Aap bina inventory ke bhi kam kar sakte ho.";
+  }
+  
+  // 18. Growth ka scope kya hai?
+  if (lowerMsg.includes("growth") || lowerMsg.includes("scope") || lowerMsg.includes("aage badhna") || lowerMsg.includes("career")) {
+    return "📈 Clear career path: Associate → Wellness Consultant → Team Leader → Center Partner → State Head. Performance-based promotions aur special rewards.";
+  }
+  
+  // 19. Kya mai dusri job ke sath ye kar sakta hu?
+  if (lowerMsg.includes("dusri job") || lowerMsg.includes("job ke sath") || lowerMsg.includes("side income") || (lowerMsg.includes("job") && lowerMsg.includes("kar sakta"))) {
+    return "💼 Absolutely! VIDMOSS ko side business model ke taur par kar sakte ho. 9–5 job ke baad ya weekends pe income generate karna easy hai.";
+  }
+  
+  // 20. Join karne ke baad support milega?
+  if (lowerMsg.includes("support") || lowerMsg.includes("mentor") || lowerMsg.includes("help milegi") || (lowerMsg.includes("join") && lowerMsg.includes("baad"))) {
+    return "🤝 Haan! Har naye member ko dedicated mentor assigned hota hai. Plus WhatsApp support group, regional meets aur 24/7 query resolution system active hai.";
+  }
+  
+  // BONUS: Date / time helper
+  if (lowerMsg.includes("date") || lowerMsg.includes("today") || lowerMsg.includes("aaj ki tarikh")) {
+    const today = new Date();
+    return `📅 ${today.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+  }
+  
+  // Quick calculator for numbers
+  try {
+    if (lowerMsg.match(/^[\d\s\+\-\*\/\(\)\.]+$/) && !lowerMsg.match(/[a-z]/i) && lowerMsg.length < 40) {
+      let result = eval(lowerMsg);
+      if (typeof result === 'number' && !isNaN(result) && isFinite(result)) return `🧮 Result: ${result}`;
+    }
+  } catch(e) {}
+  
+  // smart fallback
+  return "💚 Main VIDMOSS Smart Help Agent hoon! Aap pooch sakte ho: joining process, fees, earning, MLM, work details, center, support, growth, etc. Neeche 20 question slider scroll karo aur click karo!";
+}
+
+// ========== UI & MESSAGE HANDLING ==========
+const chatContainer = document.getElementById("chat");
+const inputField = document.getElementById("input");
+
+function addMessage(text, type) {
+  const messageDiv = document.createElement("div");
+  messageDiv.className = `message ${type}`;
+  messageDiv.innerText = text;
+  chatContainer.appendChild(messageDiv);
+  // smooth scroll to bottom
+  chatContainer.scrollTo({
+    top: chatContainer.scrollHeight,
+    behavior: "smooth"
+  });
+}
+
+function sendMessage() {
+  let rawText = inputField.value.trim();
+  if (!rawText) return;
+  addMessage(rawText, "user");
+  inputField.value = "";
+  // tiny delay for natural feel
+  setTimeout(() => {
+    const reply = getBotResponse(rawText);
+    addMessage(reply, "bot");
+  }, 180);
+}
+
+function quickAsk(questionText) {
+  inputField.value = questionText;
+  sendMessage();
+}
+
+inputField.addEventListener("keypress", e => { if (e.key === "Enter") sendMessage(); });
+
+// ========== EXACT 20 SUGGESTION BUTTONS (READABLE & RESPONSIVE) ==========
+const suggestionQuestions = [
+  "VIDMOSS kya hai?",
+  "Kya mai VIDMOSS ke sath kaam kar sakta hu?",
+  "Joining ka process kya hai?",
+  "Joining fees kitni hai?",
+  "Isme earning kaise hoti hai?",
+  "Kya ye MLM hai?",
+  "Mujhe kya kaam karna hoga?",
+  "Kya bina experience ke kaam kar sakte hain?",
+  "Daily kitna time dena padega?",
+  "Income kitni ho sakti hai?",
+  "Payment kaise milega?",
+  "Kya mujhe center open karna padega?",
+  "Center open karne me kitna investment lagega?",
+  "Kya ye safe aur legal hai?",
+  "Kya students bhi join kar sakte hain?",
+  "Training kaise milegi?",
+  "Kya mujhe products bechne honge?",
+  "Growth ka scope kya hai?",
+  "Kya mai dusri job ke sath ye kar sakta hu?",
+  "Join karne ke baad support milega?"
+];
+
+const sliderContainer = document.getElementById("sliderButtons");
+suggestionQuestions.forEach(question => {
+  const btn = document.createElement("button");
+  // For responsive, keep original text but if screen too small we don't truncate visually cause inline-flex wraps? Actually white-space: nowrap ensures no wrap. Use title anyway.
+  // But keep text full for better readability on tablets/desktop; on very tiny screens we rely on scroll, it's fine.
+  btn.innerText = question;
+  btn.title = `Ask: ${question}`;
+  btn.onclick = () => quickAsk(question);
+  sliderContainer.appendChild(btn);
+});
+
+// WELCOME MESSAGE with elegant tone
+window.addEventListener("DOMContentLoaded", () => {
+  addMessage("🌱 Namaste! Main VIDMOSS Help Agent AI hoon. Mujhe 20+ smart Q&A answers aate hain — joining, income, work, center, support aur bhi bahut kuch. Neeche diye suggestion buttons scroll karke koi bhi sawaal click karein. 🚀 Register Interest button se expert se WhatsApp par turant connect ho sakte ho!", "bot");
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Health Scan · Packages with Prices</title>
+    <!-- Font Awesome 5 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #d9e6f2 0%, #ecf3fa 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            width: 100%;
+        }
+
+        .responsive-card {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 42px;
+            box-shadow: 0 30px 60px rgba(0, 20, 40, 0.20);
+            padding: 2.2rem 2rem;
+            border: 1px solid #c2d8ec;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-card {
+                padding: 1.5rem 1.2rem;
+                border-radius: 32px;
+            }
+        }
+
+        .main-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: #0b2b3c;
+            margin-bottom: 6px;
+        }
+
+        .main-heading span {
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            color: #2f5f7a;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 600px) {
+            .main-heading { font-size: 2rem; }
+            .main-heading span { font-size: 1rem; }
+        }
+
+        .section-label {
+            font-size: 1.5rem;
+            font-weight: 650;
+            color: #163a4f;
+            border-left: 8px solid #3079b3;
+            padding-left: 16px;
+            margin: 24px 0 16px 0;
+        }
+
+        @media (max-width: 600px) {
+            .section-label { font-size: 1.25rem; margin: 18px 0 12px; }
+        }
+
+        /* Form grid - 2 columns desktop, 1 mobile */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.8rem 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-field label {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #1b4f6e;
+            padding-left: 6px;
+        }
+
+        .input-field input, .time-select {
+            background: #f0f7ff;
+            border: 2px solid #c1d9f0;
+            border-radius: 30px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #0f2f40;
+            outline: none;
+            width: 100%;
+        }
+
+        .input-field input:focus, .time-select:focus {
+            border-color: #1d6f9e;
+            background: #ffffff;
+        }
+
+        /* Name aur Mobile field same size */
+        #fullName, #mobileNumber {
+            padding: 18px 22px;
+            font-size: 1.1rem;
+        }
+
+        /* Mobile specific - dono fields full width */
+        @media (max-width: 700px) {
+            .input-field {
+                width: 100%;
+                grid-column: 1 / -1;
+            }
+            
+            .input-field input {
+                width: 100%;
+            }
+        }
+
+        /* age chips */
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .chip-btn {
+            background: #e4f0fc;
+            color: #0f405c;
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-size: 1rem;
+            border: 2px solid #b5d2f0;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .chip-btn.active {
+            background: #1d6f9e;
+            color: white;
+            border-color: #0b4b70;
+        }
+
+        .time-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%232b6d97' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 18px;
+        }
+
+        /* packages grid */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        @media (max-width: 800px) {
+            .packages-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .package-card {
+            background: #f4fafd;
+            border-radius: 28px;
+            padding: 1.5rem 1.5rem 1.5rem;
+            border: 2px solid #c1d9ee;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .package-card.selected {
+            border: 3px solid #1d6f9e;
+            background: #e7f3ff;
+            box-shadow: 0 8px 20px rgba(29, 111, 158, 0.2);
+        }
+
+        .package-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0b3449;
+            margin-bottom: 8px;
+        }
+
+        /* Price tag styling */
+        .package-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #1d6f9e;
+            background: rgba(29, 111, 158, 0.08);
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 40px;
+            margin: 4px 0 12px 0;
+            align-self: flex-start;
+            border: 1px dashed #1d6f9e;
+        }
+
+        .package-card.selected .package-price {
+            background: #1d6f9e;
+            color: white;
+            border: 1px solid white;
+        }
+
+        .package-ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .package-ul li {
+            font-size: 1rem;
+            padding: 5px 0;
+            color: #1d4f6b;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .package-ul li::before {
+            content: "•";
+            color: #307faf;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .select-pkg-btn {
+            background: #ecf5fc;
+            border: 2px solid #307faf;
+            color: #1a577b;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 12px 10px;
+            border-radius: 40px;
+            width: 100%;
+            text-align: center;
+            pointer-events: none;
+            margin-top: auto;
+        }
+
+        .package-card.selected .select-pkg-btn {
+            background: #1d6f9e;
+            color: white;
+            border-color: #0d4c73;
+        }
+
+        /* info grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 2.2rem 0 1.8rem;
+        }
+
+        @media (max-width: 650px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+        }
+
+        .expect-box, .instructions-box {
+            background: #f0f7fd;
+            border-radius: 28px;
+            padding: 1.5rem 1.8rem;
+            border: 2px solid #c1d9ee;
+        }
+
+        .expect-box h4, .instructions-box h4 {
+            font-size: 1.5rem;
+            font-weight: 650;
+            color: #113c53;
+            margin-bottom: 15px;
+        }
+
+        .expect-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .expect-list li {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1b5372;
+            padding: 6px 0;
+            display: flex;
+            gap: 10px;
+            counter-increment: step-counter;
+        }
+
+        .expect-list li::before {
+            content: counter(step-counter) ".";
+            font-weight: 700;
+            color: #2473a6;
+            font-size: 1.3rem;
+            min-width: 2rem;
+        }
+
+        .instructions-list {
+            list-style: none;
+        }
+
+        .instructions-list li {
+            font-size: 1.05rem;
+            padding: 8px 0;
+            color: #1e4f6b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .instructions-list li i {
+            color: #2679ae;
+            width: 1.6rem;
+            font-size: 1.2rem;
+        }
+
+        .confirm-bar {
+            background: #e3f0fa;
+            border-radius: 30px;
+            padding: 1.2rem 2rem;
+            margin: 1.8rem 0 1.2rem;
+            border: 2px solid #b9d6ef;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.2rem;
+        }
+
+        @media (max-width: 600px) {
+            .confirm-bar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 1.2rem;
+            }
+        }
+
+        .confirm-btn {
+            background: #1c6c9b;
+            color: white;
+            font-weight: 700;
+            font-size: 1.4rem;
+            padding: 12px 32px;
+            border-radius: 60px;
+            text-align: center;
+            border: 2px solid #0d4c73;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .confirm-btn:active {
+            background: #0f5780;
+            transform: scale(0.98);
+        }
+
+        .help-line {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #124866;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .phone {
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .email {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1a577b;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+        }
+
+        hr {
+            border: 2px solid #b9d3ef;
+            margin: 16px 0 6px;
+        }
+
+        .toast-message {
+            background: #1c6c9b;
+            color: white;
+            padding: 14px 18px;
+            border-radius: 60px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 16px;
+            font-size: 1rem;
+            border: 2px solid #0b486b;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="responsive-card">
+        <div class="main-heading">
+            Book Your Health Scan
+            <span>Schedule Your Comprehensive Health Checkup</span>
+        </div>
+
+        <!-- Fill in your details -->
+        <div class="section-label">Fill in Your Details</div>
+        <div class="form-grid">
+            <!-- NAME FIELD -->
+            <div class="input-field">
+                <label>Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name" value="">
+            </div>
+
+            <!-- MOBILE FIELD -->
+            <div class="input-field">
+                <label>Mobile Number</label>
+                <input type="tel" id="mobileNumber" placeholder="Mobile Number" value="">
+            </div>
+
+            <!-- Age group -->
+            <div class="input-field">
+                <label>Select Age Group</label>
+                <div class="chip-row" id="ageGroupContainer">
+                    <span class="chip-btn active" data-age="1-17">1-17</span>
+                    <span class="chip-btn" data-age="18-45">18-45</span>
+                    <span class="chip-btn" data-age="46-60">46-60</span>
+                    <span class="chip-btn" data-age="60+">60+</span>
+                </div>
+            </div>
+
+            <!-- Appointment date -->
+            <div class="input-field">
+                <label>Preferred Appointment Date</label>
+                <input type="date" id="appointmentDate" value="">
+            </div>
+
+            <!-- Time slot dropdown -->
+            <div class="input-field" style="grid-column: span 2; @media (max-width:700px){grid-column:span 1}">
+                <label>Select Time Slot</label>
+                <select id="timeSlot" class="time-select">
+                    <option value="Morning (9:00-12:00)">Morning (9:00 – 12:00)</option>
+                    <option value="Afternoon (13:00-16:00)">Afternoon (13:00 – 16:00)</option>
+                    <option value="Evening (17:00-20:00)">Evening (17:00 – 20:00)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Packages with PRICES -->
+        <div class="section-label">Choose Your Health Scan Package</div>
+        <div class="packages-grid" id="packageContainer">
+            <!-- Basic Health Scan - ₹999 -->
+            <div class="package-card selected" data-package="Basic Health Scan" data-price="999">
+                <h3>Basic Health Scan</h3>
+                <div class="package-price">₹999</div>
+                <ul class="package-ul">
+                    
+                    <li>BP Check</li>
+                    <li>Sugar Check</li>
+                    <li>BMI & Weight Analysis</li>
+                  <li>Basic Body Composition</li>
+                  <li>General Health Report</li>
+                   
+                </ul>
+                <div class="select-pkg-btn">Select Package</div>
+            </div>
+
+            <!-- Advanced Health Scan - ₹2999 -->
+            <div class="package-card" data-package="Advanced Health Scan" data-price="2999">
+                <h3>Advanced Health Scan</h3>
+                <div class="package-price">₹2999</div>
+                <ul class="package-ul">
+                  
+                  <li>complete Body Analysis</li>
+                  <li>AI Health Screening</li>
+<li>Ayurveda Body Type (Vata/Pitta/Kapha)Analysis</li>
+<li>stress Level Check</li>
+<li>Lifestyle Risk Analysis</li>
+<li>Diet & Lifestyle</li>
+<li>Basic Consultation</li>
+<li>Detailed Report Explanation</li>
+
+                </ul>
+                <div class="select-pkg-btn">Select Package</div>
+            </div>
+
+            <!-- Premium Health Scan - ₹4999 -->
+            <div class="package-card" data-package="Premium Health Scan" data-price="4999">
+                <h3>Premium Health Scan</h3>
+                <div class="package-price">₹4999</div>
+                <ul class="package-ul">
+<li>Advanced AI Health Scan</li>
+<li>Detailed Body Composition</li>
+<li>Ayurveda Dosha Analysis</li>
+<li>Stress & Energy Analysis</li>
+<li>Face / Lifestyle AI Analysis</li>
+<li>Full Health Report</li>
+<li>Doctor / Expert Consultation</li>
+<li>Personalized Diet Plan</li>
+<li>Therapy Recommendation</li>
+                </ul>
+                <div class="select-pkg-btn">Select Package</div>
+            </div>
+        </div>
+
+        <!-- Info sections -->
+        <div class="info-grid">
+            <div class="expect-box">
+                <h4>What to Expect?</h4>
+                <ul class="expect-list">
+                    <li>Arrival & Registration</li>
+                    <li>Diagnostic Tests</li>
+                    <li>Doctor Consultation</li>
+                </ul>
+            </div>
+            <div class="instructions-box">
+                <h4>Important Instructions</h4>
+                <ul class="instructions-list">
+                    <li><i class="fas fa-hourglass-half"></i> Fasting may be required</li>
+                    <li><i class="fas fa-file-medical"></i> Carry previous medical records</li>
+                    <li><i class="fas fa-clock"></i> Arrive 10 minutes early</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Confirm & WhatsApp button -->
+        <div class="confirm-bar">
+            <div class="confirm-btn" id="confirmBooking">
+                <i class="fab fa-whatsapp" style="margin-right: 8px;"></i>Confirm & Book
+            </div>
+            <div class="help-line">
+                <span class="phone"><i class="fas fa-phone-alt"></i> +91 97951 99119</span>
+                <span class="email"><i class="far fa-envelope"></i> vidmoss1@gmail.com</span>
+            </div>
+        </div>
+
+        <!-- Toast message -->
+        <div id="toast" class="toast-message hidden"></div>
+        <hr>
+        <div style="font-size: 0.8rem; color: #5a84a0; text-align: right;">✔ Packages with prices • Basic: ₹999 • Advanced: ₹2999 • Premium: ₹4999</div>
+    </div>
+
+    <script>
+        (function() {
+            // Age group selection
+            const ageChips = document.querySelectorAll('.chip-btn');
+            ageChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    ageChips.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Package selection
+            const packageCards = document.querySelectorAll('.package-card');
+            packageCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    packageCards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            // Mobile number validation
+            const mobileInput = document.getElementById('mobileNumber');
+            mobileInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+            });
+
+            // Set today as min date
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('appointmentDate');
+            dateInput.setAttribute('min', today);
+
+            // Toast
+            const toast = document.getElementById('toast');
+            function showToast(message, isSuccess = true) {
+                toast.textContent = message;
+                toast.classList.remove('hidden');
+                toast.style.background = isSuccess ? '#1c6c9b' : '#b13e3e';
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 3500);
+            }
+
+            // WhatsApp booking with price
+            const confirmBtn = document.getElementById('confirmBooking');
+            const COMPANY_PHONE = '919795199119';  // +91 97951 99119
+
+            confirmBtn.addEventListener('click', function() {
+                const name = document.getElementById('fullName').value.trim();
+                const mobile = document.getElementById('mobileNumber').value.trim();
+                const date = document.getElementById('appointmentDate').value;
+                const timeSlot = document.getElementById('timeSlot').value;
+
+                let selectedAge = '1-17';
+                document.querySelectorAll('.chip-btn').forEach(chip => {
+                    if (chip.classList.contains('active')) {
+                        selectedAge = chip.getAttribute('data-age');
+                    }
+                });
+
+                // Get selected package and price
+                let selectedPackage = 'Basic Health Scan';
+                let selectedPrice = '999';
+                document.querySelectorAll('.package-card').forEach(card => {
+                    if (card.classList.contains('selected')) {
+                        selectedPackage = card.getAttribute('data-package');
+                        selectedPrice = card.getAttribute('data-price');
+                    }
+                });
+
+                // Format price with commas
+                const priceFormatted = new Intl.NumberFormat('en-IN').format(selectedPrice);
+
+                // Validations
+                if (!name) {
+                    showToast('❌ Please enter your full name', false);
+                    return;
+                }
+                if (!mobile || mobile.length !== 10) {
+                    showToast('❌ Enter valid 10-digit mobile number', false);
+                    return;
+                }
+                if (!date) {
+                    showToast('❌ Select appointment date', false);
+                    return;
+                }
+
+                const formattedDate = new Date(date).toLocaleDateString('en-GB', {
+                    day: '2-digit', month: '2-digit', year: 'numeric'
+                });
+
+                showToast('✅ Redirecting to WhatsApp...', true);
+
+                // Message with price
+                const message = `Hello, I want to book a health scan.%0a%0a*Details:*%0aName: ${name}%0aMobile: ${mobile}%0aAge Group: ${selectedAge}%0aDate: ${formattedDate}%0aTime: ${timeSlot}%0aPackage: ${selectedPackage}%0aPrice: ₹${priceFormatted}`;
+
+                const whatsappUrl = `https://wa.me/${COMPANY_PHONE}?text=${message}`;
+
+                setTimeout(() => {
+                    window.open(whatsappUrl, '_blank');
+                }, 400);
+
+                console.log('Booking sent:', { name, mobile, selectedAge, date, timeSlot, selectedPackage, price: priceFormatted });
+            });
+
+        })();
+    </script>
+</body>
+</html>

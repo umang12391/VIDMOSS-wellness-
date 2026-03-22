@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>VIDMOSS · wellness & business network</title>
+  <!-- pure CSS, no Tailwind -->
+  <style>
+    /* ----- RESET / GLOBAL ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* Classic & Premium Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(145deg, #f0f9f0 0%, #e2f0e2 100%);
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+      color: #1f2937;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding-top: 70px;
+    }
+    
+    @media (min-width: 768px) {
+      body {
+        padding-top: 80px;
+      }
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+    
+    /* utility classes */
+    .max-w-7xl { max-width: 80rem; margin-left: auto; margin-right: auto; }
+    .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .px-8 { padding-left: 2rem; padding-right: 2rem; }
+    .py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+    .py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+    .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+    .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .px-7 { padding-left: 1.75rem; padding-right: 1.75rem; }
+    .p-5 { padding: 1.25rem; }
+    .p-7 { padding: 1.75rem; }
+    .pt-6 { padding-top: 1.5rem; }
+    .pb-8 { padding-bottom: 1.5rem; }
+    .pb-10 { padding-bottom: 2.5rem; }
+    .mt-12 { margin-top: 3rem; }
+    .mt-6 { margin-top: 1.5rem; }
+    .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-8 { margin-bottom: 2rem; }
+    .mb-10 { margin-bottom: 2.5rem; }
+    .mb-16 { margin-bottom: 4rem; }
+    .mb-20 { margin-bottom: 5rem; }
+    .mt-4 { margin-top: 1rem; }
+    .space-y-1 > * + * { margin-top: 0.25rem; }
+    .space-y-2 > * + * { margin-top: 0.5rem; }
+    .space-y-3 > * + * { margin-top: 0.75rem; }
+    .space-y-5 > * + * { margin-top: 1.25rem; }
+    .space-y-6 > * + * { margin-top: 1.5rem; }
+    .space-x-4 > * + * { margin-left: 1rem; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .flex-row { flex-direction: row; }
+    .flex-wrap { flex-wrap: wrap; }
+    .items-center { align-items: center; }
+    .items-start { align-items: flex-start; }
+    .items-end { align-items: flex-end; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    .justify-end { justify-content: flex-end; }
+    .gap-2 { gap: 0.5rem; }
+    .gap-3 { gap: 0.75rem; }
+    .gap-4 { gap: 1rem; }
+    .gap-8 { gap: 2rem; }
+    .grid { display: grid; }
+    .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+    .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .md\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .aspect-square { aspect-ratio: 1/1; }
+    .aspect-\[5\/4\] { aspect-ratio: 5/4; }
+    .h-16 { height: 4rem; }
+    .h-20 { height: 5rem; }
+    .h-80 { height: 20rem; }
+    .h-10 { height: 2.5rem; }
+    .h-8 { height: 2rem; }
+    .h-5 { height: 1.25rem; }
+    .h-0\.5 { height: 0.125rem; }
+    .w-7 { width: 1.75rem; }
+    .w-8 { width: 2rem; }
+    .w-10 { width: 2.5rem; }
+    .w-5 { width: 1.25rem; }
+    .w-6 { width: 1.5rem; }
+    .w-4 { width: 1rem; }
+    .w-full { width: 100%; }
+    .max-w-4xl { max-width: 56rem; }
+    .min-w-[140px] { min-width: 140px; }
+    .min-w-[150px] { min-width: 150px; }
+    .min-w-[160px] { min-width: 160px; }
+    .whitespace-nowrap { white-space: nowrap; }
+    .relative { position: relative; }
+    .absolute { position: absolute; }
+    .fixed { position: fixed; }
+    .inset-0 { top:0; left:0; right:0; bottom:0; }
+    .z-10 { z-index: 10; }
+    .z-30 { z-index: 30; }
+    .z-50 { z-index: 50; }
+    .z-[100] { z-index: 100; }
+    .overflow-hidden { overflow: hidden; }
+    .overflow-x-hidden { overflow-x: hidden; }
+    .rounded-full { border-radius: 9999px; }
+    .rounded-2xl { border-radius: 1rem; }
+    .rounded-3xl { border-radius: 1.5rem; }
+    .rounded-xl { border-radius: 0.75rem; }
+    .rounded-none { border-radius: 0 !important; }
+    .border { border: 1px solid; }
+    .border-2 { border-width: 2px; }
+    .border-b { border-bottom: 1px solid; }
+    .border-t { border-top: 1px solid; }
+    .border-gray-100 { border-color: #f3f4f6; }
+    .border-white\/40 { border-color: rgba(255,255,255,0.4); }
+    .border-\[\#1c5a3a\] { border-color: #1c5a3a; }
+    .border-\[\#1c5a3a\]\/30 { border-color: rgba(28, 90, 58, 0.3); }
+    .border-black { border-color: #000000; }
+    .bg-white { background-color: #ffffff; }
+    .bg-white\/70 { background-color: rgba(255,255,255,0.7); }
+    .bg-white\/80 { background-color: rgba(255,255,255,0.8); }
+    .bg-\[\#1c5a3a\] { background-color: #1c5a3a; }
+    .bg-\[\#e9f2e9\] { background-color: #e9f2e9; }
+    .bg-\[\#25D366\] { background-color: #25D366; }
+    .bg-\[\#0077b5\] { background-color: #0077b5; }
+    .bg-black\/10 { background-color: rgba(0,0,0,0.05); }
+    .bg-gradient-to-t { background: linear-gradient(to top, rgba(0,0,0,0.2), transparent); }
+    .text-white { color: #fff; }
+    .text-gray-800 { color: #1f2937; }
+    .text-gray-700 { color: #374151; }
+    .text-gray-600 { color: #4b5563; }
+    .text-gray-500 { color: #6b7280; }
+    .text-\[\#1c5a3a\] { color: #1c5a3a; }
+    .text-black { color: #000000; }
+    .text-xs { font-size: 0.75rem; line-height: 1rem; }
+    .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+    .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+    .text-5xl { font-size: 3rem; line-height: 1; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+    .font-extrabold { font-weight: 800; }
+    .tracking-tight { letter-spacing: -0.025em; }
+    .leading-tight { line-height: 1.25; }
+    .backdrop-blur-sm { backdrop-filter: blur(4px); }
+    .backdrop-blur-md { backdrop-filter: blur(8px); }
+    .shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); }
+    .shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+    .card-shadow { box-shadow: 0 15px 30px -10px rgba(40, 70, 50, 0.12); }
+    .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 25px 35px -12px rgba(30, 70, 50, 0.2); }
+    .nav-link { position: relative; transition: color 0.2s; }
+    .nav-link::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background: #1f6e43; transition: width 0.2s; }
+    .nav-link:hover::after { width: 100%; }
+    .object-cover { object-fit: cover; }
+    .gallery-zoom { overflow: hidden; border-radius: 1rem; }
+    .gallery-zoom img { transition: transform 0.4s ease; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-zoom:hover img { transform: scale(1.05); }
+    .btn-basic { transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s; }
+    .btn-basic:active { transform: scale(0.98); }
+    .btn-gradient-border { position: relative; background-clip: padding-box; border: 2px solid transparent; border-radius: 9999px; transition: all 0.2s ease; }
+    .btn-gradient-border::before {
+      content: ''; position: absolute; top: -2px; right: -2px; bottom: -2px; left: -2px;
+      background: #ecf9ec;
+      border-radius: 9999px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .btn-gradient-border:hover::before { opacity: 1; }
+    .hover\:bg-\[\#14532d\]:hover { background-color: #14532d; }
+    .hover\:bg-white:hover { background-color: #fff; }
+    .hover\:bg-\[\#ecf9ec\]:hover { background-color: #ecf9ec; }
+    .hover\:text-\[\#1c5a3a\]:hover { color: #1c5a3a; }
+    .hover\:scale-105:hover { transform: scale(1.05); }
+    .hover\:scale-110:hover { transform: scale(1.10); }
+    .transition { transition-property: all; transition-timing-function: cubic-bezier(0.4,0,0.2,1); transition-duration: 0.15s; }
+    .duration-300 { transition-duration: 0.3s; }
+
+    /* Gradient brand text */
+    .gradient-brand {
+      background: linear-gradient(115deg, blue, green);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    @media (min-width: 768px) {
+      .gradient-brand {
+        font-size: 2.1rem;
+      }
+    }
+    /* navbar wellness center - slightly bigger */
+    .brand-sub {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      margin-top: -4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      margin-left: -2px;
+      background: linear-gradient(135deg, #0a2f6c, #1c5a3a);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    @media (min-width: 768px) {
+      .brand-sub {
+        font-size: 0.78rem;
+      }
+    }
+    /* gradient heading for diagnostics + services network + partner */
+    .gradient-heading {
+      background: linear-gradient(135deg, blue, green);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .gradient-service-heading {
+      background: linear-gradient(135deg, blue, green);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .gradient-partner-heading {
+      background: linear-gradient(135deg, blue, green);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    @keyframes slideDown {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slideDown {
+      animation: slideDown 0.25s ease forwards;
+    }
+
+    /* media queries */
+    @media (min-width: 640px) {
+      .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .sm\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+      .sm\:py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+      .sm\:pb-10 { padding-bottom: 2.5rem; }
+      .sm\:mb-4 { margin-bottom: 1rem; }
+      .sm\:min-w-\[160px\] { min-width: 160px; }
+      .sm\:min-w-\[180px\] { min-width: 180px; }
+      .sm\:text-sm { font-size: 0.875rem; }
+      .sm\:gap-4 { gap: 1rem; }
+    }
+    @media (min-width: 768px) {
+      .md\:flex { display: flex; }
+      .md\:hidden { display: none; }
+      .md\:h-20 { height: 5rem; }
+      .md\:grid-cols-2 { grid-template-columns: repeat(2,1fr); }
+      .md\:grid-cols-3 { grid-template-columns: repeat(3,1fr); }
+      .md\:grid-cols-4 { grid-template-columns: repeat(4,1fr); }
+      .md\:grid-cols-5 { grid-template-columns: repeat(5,1fr); }
+      .md\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+      .md\:py-10 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+      .md\:pb-12 { padding-bottom: 3rem; }
+      .md\:text-4xl { font-size: 2.25rem; }
+      .md\:text-5xl { font-size: 3rem; }
+      .md\:gap-6 { gap: 1.5rem; }
+      .md\:max-w-3xl { max-width: 48rem; }
+      .md\:mx-auto { margin-left: auto; margin-right: auto; }
+    }
+    @media (min-width: 1024px) {
+      .lg\:pb-16 { padding-bottom: 4rem; }
+      .lg\:max-w-4xl { max-width: 56rem; }
+    }
+
+    /* Desktop hero aspect ratio - smaller size */
+    @media (min-width: 768px) {
+      .hero-slider-container {
+        aspect-ratio: 16 / 9 !important;
+        max-width: 80% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    }
+    
+    .hero-base {
+      aspect-ratio: 5 / 4;
+    }
+
+    /* Menu button styles */
+    .menu-btn {
+      background: transparent;
+      border: none;
+      padding: 0.5rem;
+      color: #1c5a3a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .menu-btn:hover {
+      color: #0f3b25;
+      transform: scale(1.05);
+    }
+    .menu-btn svg {
+      width: 2rem;
+      height: 2rem;
+      stroke-width: 2;
+    }
+
+    /* Navbar fixed */
+    .navbar-fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+      border-radius: 0 !important;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      border-bottom: 2px solid #1c5a3a;
+      background-color: rgba(255, 255, 255, 0.9);
+      height: 70px;
+    }
+    
+    .navbar-fixed .nav-container {
+      max-width: 80rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      height: 100%;
+    }
+    
+    @media (min-width: 768px) {
+      .navbar-fixed .nav-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+      .navbar-fixed {
+        height: 80px;
+      }
+    }
+
+    /* Menu panel */
+    #menuPanel {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid #1c5a3a;
+      border-top: none;
+      box-shadow: 0 20px 30px -10px rgba(28, 90, 58, 0.3);
+      z-index: 100;
+      overflow: hidden;
+    }
+    #menuPanel.show {
+      display: block;
+    }
+    .menu-item {
+      padding: 1rem 1.75rem;
+      transition: background 0.2s, color 0.2s;
+      color: #1f2937;
+      font-weight: 500;
+      font-size: 1.1rem;
+      border-bottom: 0.9px solid #1c5a3a;
+      text-align: left;
+      cursor: pointer;
+      display: block;
+    }
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+    .menu-item:hover {
+      background: #1c5a3a;
+      color: white;
+    }
+    .nav-container {
+      position: relative;
+      width: 100%;
+    }
+
+    /* classic brand */
+    .classic-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-left: -2px;
+    }
+
+    /* Help, call, whatsapp buttons */
+    .help-btn {
+      background-color: #1c5a3a;
+      color: white;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.2s, background-color 0.2s;
+      text-decoration: none;
+    }
+    .help-btn:hover {
+      background-color: #14532d;
+      transform: scale(1.05);
+    }
+    .help-btn svg {
+      width: 1.4rem;
+      height: 1.4rem;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* Diagnostics image box */
+    .diagnostics-image-box {
+      display: flex;
+      align-items: stretch;
+      padding: 0;
+      line-height: 0;
+      font-size: 0;
+      border: 2px solid #1c5a3a;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+    
+    @media (min-width: 768px) {
+      .diagnostics-image-box {
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        aspect-ratio: 16/9;
+      }
+    }
+    
+    .diagnostics-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* HERO BUTTONS */
+    .hero-section-new {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+    
+    .hero-slider-container {
+      position: relative;
+      width: 100%;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 2px solid #1c5a3a;
+      aspect-ratio: 5/4;
+      touch-action: pan-y pinch-zoom;
+    }
+    
+    @media (min-width: 768px) {
+      .hero-slider-container {
+        aspect-ratio: 16/9;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    
+    .slider-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s ease-out;
+      cursor: grab;
+    }
+    .slider-track:active {
+      cursor: grabbing;
+    }
+    
+    .slider-slide {
+      flex: 0 0 100%;
+      height: 100%;
+      user-select: none;
+      pointer-events: none;
+    }
+    
+    .slider-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+    
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+      flex-wrap: wrap;
+    }
+    
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #bbb;
+      border: 1px solid #1c5a3a;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    
+    .dot.active {
+      background-color: #1c5a3a;
+      transform: scale(1.2);
+    }
+    
+    .hero-button-bar {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      width: 100%;
+    }
+    
+    @media (min-width: 768px) {
+      .hero-button-bar {
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    
+    .hero-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.7rem;
+      min-width: 110px;
+      white-space: nowrap;
+      border-radius: 9999px;
+      font-weight: 800;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: all 0.2s;
+      text-align: center;
+      border: 1.5px solid #1c5a3a;
+      flex: 0 1 auto;
+      line-height: 2.5;
+      display: inline-block;
+    }
+    
+    .hero-btn-left { background-color: white; color: #1c5a3a; }
+    .hero-btn-center { background-color: #1c5a3a; color: white; border: 2px solid #1c5a3a; }
+    .hero-btn-right { background-color: white; color: #1c5a3a; }
+    .hero-btn:hover { transform: scale(1.02); filter: brightness(0.95); }
+    
+    @media (max-width: 400px) { .hero-btn { min-width: 100px; padding: 0.3rem 0.5rem; font-size: 0.62rem; } }
+    
+    .integrated-image {
+      aspect-ratio: 5/4;
+      width: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 2px solid #1c5a3a;
+      box-shadow: 0 15px 30px -10px rgba(40,70,50,0.12);
+    }
+    @media (min-width: 768px) {
+      .integrated-image {
+        aspect-ratio: 16 / 9 !important;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    .integrated-image img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .page-section { scroll-margin-top: 100px; }
+    .icon-group { margin-right: -3px; }
+
+    /* Gallery styles: flexible natural size per image */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    @media (min-width: 768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    
+    .gallery-item {
+      border: 2px solid rgba(28, 90, 58, 0.3);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 15px 30px -10px rgba(40, 70, 50, 0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: #fff;
+    }
+    .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 25px 35px -12px rgba(30, 70, 50, 0.2); }
+    .gallery-item img { 
+      width: 100%; 
+      height: auto; 
+      display: block; 
+      transition: transform 0.4s ease;
+      object-fit: contain;
+    }
+    .gallery-item:hover img { transform: scale(1.02); }
+    
+    @media (min-width: 768px) { .diagnostics-content { padding-left: 2rem; text-align: left; } }
+    
+    /* Social Icons - clean circle with official brand logos */
+    .social-circle-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      background: #1c5a3a;
+      color: white;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+    .social-circle-icon:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: #0f3b25;
+    }
+    .social-circle-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 14px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    
+    /* Gallery button */
+    .gallery-button-wrapper {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+    .gallery-see-btn {
+      display: inline-block;
+      background-color: #1c5a3a;
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 2px solid #1c5a3a;
+    }
+    .gallery-see-btn:hover {
+      background-color: #14532d;
+      transform: scale(1.02);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Partner boxes 2x3 grid */
+    .partner-grid-2x3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .partner-grid-2x3 {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+    }
+    .partner-card {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(4px);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      border: 2px solid rgba(28, 90, 58, 0.25);
+      transition: all 0.2s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .partner-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 30px -12px rgba(28, 90, 58, 0.2);
+      border-color: #1c5a3a;
+      background: white;
+    }
+    .partner-icon {
+      width: 48px;
+      height: 48px;
+      background: #eef5ee;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: #1c5a3a;
+    }
+    .partner-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #1f2937;
+    }
+    .partner-points {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+    .partner-points li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: #374151;
+      margin-bottom: 0.5rem;
+    }
+    .partner-points li svg {
+      width: 1rem;
+      height: 1rem;
+      color: #1c5a3a;
+      flex-shrink: 0;
+    }
+    .partner-btn {
+      background-color: #1c5a3a;
+      color: white;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      display: inline-block;
+      margin-top: 0.5rem;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+    .partner-btn:hover {
+      background-color: #14532d;
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body class="antialiased text-gray-800">
+
+  <!-- Fixed Navbar same as original -->
+  <nav class="navbar-fixed bg-white/80 backdrop-blur-sm">
+    <div class="nav-container flex items-center justify-between h-full">
+      <div class="flex flex-col items-start justify-center" style="margin-left: -2px;">
+        <div class="classic-brand"><span class="gradient-brand">VIDMOSS</span></div>
+        <div class="brand-sub">Wellness Center</div>
+      </div>
+      <div class="flex items-center space-x-4 icon-group">
+        <a href="https://wa.me/919795199119" target="_blank" class="bg-[#25D366] text-white w-10 h-10 rounded-full flex items-center justify-center shadow-sm hover:scale-105 transition" aria-label="WhatsApp"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.473-.149-.673.149-.2.297-.767.967-.94 1.165-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.673-1.62-.922-2.22-.242-.579-.487-.5-.673-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.87.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.556 4.12 1.526 5.851L.044 23.145c-.114.434.287.835.721.721l5.294-1.482C7.88 23.444 9.88 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.84 0-3.567-.495-5.05-1.36l-.363-.21-3.75 1.05 1.05-3.75-.21-.363A9.943 9.943 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg></a>
+        <a href="chatbot.html" class="help-btn" aria-label="Help"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="8" cy="16" r="1"></circle><circle cx="16" cy="16" r="1"></circle><line x1="8" y1="7" x2="8" y2="11"></line><line x1="16" y1="7" x2="16" y2="11"></line><line x1="12" y1="2" x2="12" y2="7"></line><line x1="6" y1="4" x2="8" y2="7"></line><line x1="18" y1="4" x2="16" y2="7"></line></svg></a>
+        <a href="tel:+919795199119" class="bg-[#0077b5] text-white w-10 h-10 rounded-full flex items-center justify-center shadow-sm hover:scale-105 transition" aria-label="Call"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></a>
+        <button id="menuToggle" class="menu-btn" aria-label="Menu"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+      </div>
+    </div>
+    <div id="menuPanel" class="absolute animate-slideDown"><div class="flex flex-col py-2"><a href="#home" class="menu-item">Home</a><a href="#service" class="menu-item">Service</a><a href="#diagnostic" class="menu-item">Diagnostic</a><a href="#partner" class="menu-item">Partner</a><a href="#gallery" class="menu-item">Gallery</a><a href="#contact" class="menu-item">Contact</a></div></div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-5 md:px-8 py-6 md:py-10 w-full overflow-x-hidden">
+    <!-- Hero section same as original (slider omitted for brevity, but kept intact) -->
+    <section id="home" class="hero-section-new mb-16 page-section"><div class="hero-slider-container border-2 border-[#1c5a3a] card-shadow" id="heroSliderContainer"><div class="slider-track" id="sliderTrack"><div class="slider-slide"><img src="image1.jpg" alt="image1" loading="lazy" draggable="false"></div><div class="slider-slide"><img src="image2.jpg" alt="image2" loading="lazy" draggable="false"></div><div class="slider-slide"><img src="image3.jpg" alt="image3" loading="lazy" draggable="false"></div><div class="slider-slide"><img src="image4.jpg" alt="image4" loading="lazy" draggable="false"></div><div class="slider-slide"><img src="image5.jpg" alt="image5" loading="lazy" draggable="false"></div><div class="slider-slide"><img src="image6.jpg" alt="image6" loading="lazy" draggable="false"></div><div class="slider-slide"><img src="image7.jpg" alt="image7" loading="lazy" draggable="false"></div><div class="slider-slide"><img src="image8.jpg" alt="image8" loading="lazy" draggable="false"></div></div></div><div class="slider-dots" id="sliderDots"></div><div class="hero-button-bar"><a href="bookhealthscan.html" class="hero-btn hero-btn-left">Book Health Scan</a><a href="join.html" class="hero-btn hero-btn-center">Join Partner</a><a href="wellness.html" class="hero-btn hero-btn-right">Start Wellness Center</a></div></section>
+
+    <!-- Advanced Health Diagnostics -->
+    <section id="diagnostic" class="grid md:grid-cols-2 gap-8 items-center mb-20 page-section"><div class="space-y-5 diagnostics-content"><h2 class="text-4xl md:text-5xl font-bold leading-tight"><span class="gradient-heading">Advanced Health Diagnostics</span></h2><p class="text-xl text-gray-600">AI Based Wellness Analysis</p><ul class="space-y-3 text-gray-700"><li class="flex items-center gap-2"><svg class="w-5 h-5 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>AI Nadi Tarangini Scan</li><li class="flex items-center gap-2"><svg class="w-5 h-5 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Quantum Health Scan</li><li class="flex items-center gap-2"><svg class="w-5 h-5 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Aura Energy Analysis</li></ul><div class="flex justify-start mt-6"><a href="diagnostic.html" class="inline-block bg-[#1c5a3a] text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow hover:bg-[#14532d] transition">View Diagnostics</a></div></div><div class="diagnostics-image-box card-shadow hover-lift aspect-[5/4] md:aspect-[16/9]"><img src="diagnostics.jpg" alt="futuristic health scanner diagnostic"></div></section>
+
+    <!-- Integrated Services -->
+    <section id="service" class="mb-20 page-section"><h2 class="text-3xl md:text-4xl font-bold text-center mb-4"><span class="gradient-service-heading">VIDMOSS Integrated Services Network</span></h2><div class="integrated-image mx-auto mb-10 max-w-3xl"><img src="network.jpg" alt="integrated services diagnostics"></div><div class="grid md:grid-cols-2 gap-8"><div class="bg-white/80 backdrop-blur-sm p-7 rounded-3xl card-shadow hover-lift border-2 border-[#1c5a3a]/30"><div class="flex items-center gap-2 mb-4"><svg class="w-6 h-6 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg><span class="text-lg font-semibold text-gray-800">Wellness & Diagnostics</span></div><ul class="space-y-2 text-gray-700 mb-6"><li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>AI Diagnostics</li><li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Panchakarma Therapy</li><li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Detox Therapy</li><li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Stress Management</li></ul><a href="view.html" class="inline-block bg-[#1c5a3a] text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow hover:bg-[#14532d] transition">View Diagnostics</a></div><div class="bg-white/80 backdrop-blur-sm p-7 rounded-3xl card-shadow hover-lift border-2 border-[#1c5a3a]/30"><div class="flex items-center gap-2 mb-4"><svg class="w-6 h-6 text-[#1c5a3a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg><span class="text-lg font-semibold text-gray-800">Business Network</span></div><ul class="space-y-2 text-gray-700 mb-6"><li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Building Construction</li><li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Solar Projects</li><li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Loans & Insurance</li><li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#1c5a3a]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>Education & Career</li></ul><a href="explore.html" class="inline-block bg-[#1c5a3a] text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow hover:bg-[#14532d] transition">Explore Business →</a></div></div></section>
+
+    <!-- Partner Network: 6 boxes exactly as requested (2x3 grid) -->
+    <section id="partner" class="mb-20 page-section">
+      <h2 class="text-3xl md:text-4xl font-bold mb-3 text-center"><span class="gradient-partner-heading">Earn With VIDMOSS. Partner Network</span></h2>
+      <p class="text-center text-gray-600 mb-10">Choose your wellness vertical and grow</p>
+      <div class="partner-grid-2x3">
+        <!-- Box 1: Start Your Business with VIDMOSS -->
+        <div class="partner-card"><div class="partner-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg></div><div class="partner-title">Start Your Business with VIDMOSS</div><ul class="partner-points"><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>₹11,000 Joining</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Training + Support</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Part-Time/Full-Time</li></ul><a href="joinnow.html" class="partner-btn">Join Now</a></div>
+        <!-- Box 2: Detox Therapy (Income Potential) -->
+        <div class="partner-card"><div class="partner-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div class="partner-title">Understand Your Income Potential</div><ul class="partner-points"><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Direct Income</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Team Income</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>10K-1L+ Earning</li></ul><a href="seeincomeplan.html" class="partner-btn">Income Plan</a></div>
+        <!-- Box 3: Start Your Own Wellness Center -->
+        <div class="partner-card"><div class="partner-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><path d="M12 7v6M9 10h6"/></svg></div><div class="partner-title">Start Your Own Wellness Center</div><ul class="partner-points"><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Town: 25-30 Lakh</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>City: 40-50 Lakh</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Full Setup Support</li></ul><a href="openyourcenter.html" class="partner-btn">Open Your Center</a></div>
+        <!-- Box 4: Build Your Team & Grow Income (was Tele-Doc) -->
+        <div class="partner-card"><div class="partner-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div class="partner-title">Build Your Team & Grow Income</div><ul class="partner-points"><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Team Commission</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Leadership Growth</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Passive Income</li></ul><a href="become.html" class="partner-btn">Become Leader</a></div>
+        <!-- Box 5: Open Center for Grow Income (was Medicine Delivery) -->
+        <div class="partner-card"><div class="partner-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg></div><div class="partner-title">Open Center for Grow Income</div><ul class="partner-points"><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Center on someone else's name</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Passive Income</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Become Leader</li></ul><a href="becomeleader.html" class="partner-btn">Become Leader</a></div>
+        <!-- Box 6: Open Center for Others (3rd Party Model) -->
+        <div class="partner-card"><div class="partner-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M9 21V9M15 21V9M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg></div><div class="partner-title">Open Center for Others (3rd Party Model)</div><ul class="partner-points"><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Center on someone else's name</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Expansion Model</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Start Franchise Model</li></ul><a href="startfranchisemodel.html" class="partner-btn">Start Franchise Model</a></div>
+      </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section id="gallery" class="mb-20 page-section"><h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">Wellness Gallery</h2><div class="gallery-grid"><div class="gallery-item"><img src="gallery1.jpg" alt="yoga" loading="lazy"></div><div class="gallery-item"><img src="gallery2.jpg" alt="therapy" loading="lazy"></div><div class="gallery-item"><img src="gallery3.jpg" alt="meditation" loading="lazy"></div><div class="gallery-item"><img src="gallery4.jpg" alt="wellness center" loading="lazy"></div><div class="gallery-item"><img src="gallery5.jpg" alt="fitness" loading="lazy"></div><div class="gallery-item"><img src="gallery6.jpg" alt="detox" loading="lazy"></div></div><div class="gallery-button-wrapper"><a href="seeimages.html" class="gallery-see-btn">See Images</a></div></section>
+  </main>
+
+  <!-- Footer with social icons -->
+  <footer id="contact" class="bg-white/70 backdrop-blur-sm border-t border-white/40 py-12 px-5 md:px-8 rounded-t-3xl card-shadow w-full border-2 border-[#1c5a3a]/30 mx-5 md:mx-8 mb-2 page-section" style="width: auto;"><div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8"><div><div class="text-2xl font-semibold text-[#1c5a3a] mb-4">VIDMOSS</div><p class="text-gray-600 text-sm">Wellness & Business Network<br>Integrated platform for health & growth.</p></div><div><h4 class="font-semibold text-gray-800 mb-3">Quick links</h4><ul class="space-y-2 text-gray-600 text-sm"><li><a href="#home" class="hover:text-[#1c5a3a]">Home</a></li><li><a href="#service" class="hover:text-[#1c5a3a]">Services</a></li><li><a href="#diagnostic" class="hover:text-[#1c5a3a]">Diagnostics</a></li><li><a href="#partner" class="hover:text-[#1c5a3a]">Partner</a></li></ul></div><div><h4 class="font-semibold text-gray-800 mb-3">Services links</h4><ul class="space-y-2 text-gray-600 text-sm"><li><a href="#" class="hover:text-[#1c5a3a]">AI Diagnostics</a></li><li><a href="#" class="hover:text-[#1c5a3a]">Panchakarma</a></li><li><a href="#" class="hover:text-[#1c5a3a]">Solar Projects</a></li><li><a href="#" class="hover:text-[#1c5a3a]">Education & Career</a></li></ul></div><div><h4 class="font-semibold text-gray-800 mb-3">Contact</h4><ul class="space-y-2 text-gray-600 text-sm"><li>VIDMOSS</li><li>+9197951 99119</li><li>vidmoss1@gmail.com</li><li>Kanpur Nagar, Uttar Pradesh</li></ul><div class="footer-socials"><a href="#" target="_blank" class="social-circle-icon" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.311.975.975 1.249 2.242 1.311 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.336 2.633-1.311 3.608-.975.975-2.242 1.249-3.608 1.311-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.336-3.608-1.311-.975-.975-1.249-2.242-1.311-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.336-2.633 1.311-3.608.975-.975 2.242-1.249 3.608-1.311 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.277.058-2.514.293-3.53 1.309C1.658 2.407 1.423 3.644 1.365 4.921 1.307 6.201 1.293 6.609 1.293 9.868c0 3.259.014 3.667.072 4.947.058 1.277.293 2.514 1.309 3.53 1.016 1.016 2.253 1.251 3.53 1.309 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c1.277-.058 2.514-.293 3.53-1.309 1.016-1.016 1.251-2.253 1.309-3.53.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.058-1.277-.293-2.514-1.309-3.53-1.016-1.016-2.253-1.251-3.53-1.309C15.667.014 15.259 0 12 0z"/><path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8z"/></svg></a><a href="#" target="_blank" class="social-circle-icon" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.732 0 1.325-.593 1.325-1.325V1.325C24 .593 23.407 0 22.675 0z"/></svg></a><a href="#" target="_blank" class="social-circle-icon" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a2.942 2.942 0 0 0-2.074-2.074c-1.828-.492-9.184-.492-9.184-.492s-7.356 0-9.184.492A2.942 2.942 0 0 0 .502 6.186 30.897 30.897 0 0 0 0 12c0 1.93.167 3.86.502 5.814a2.942 2.942 0 0 0 2.074 2.074c1.828.492 9.184.492 9.184.492s7.356 0 9.184-.492a2.942 2.942 0 0 0 2.074-2.074c.335-1.954.502-3.884.502-5.814s-.167-3.86-.502-5.814zM9.545 15.568v-7.136l6.136 3.568-6.136 3.568z"/></svg></a></div></div></div><div class="text-center text-sm text-gray-500 mt-12">© VIDMOSS – Wellness & Business Network</div></footer>
+
+  <script>
+    (function() {
+      const menuToggle = document.getElementById('menuToggle');
+      const menuPanel = document.getElementById('menuPanel');
+      menuPanel.style.display = 'none';
+      menuToggle.addEventListener('click', (e) => { e.stopPropagation(); menuPanel.style.display = (menuPanel.style.display === 'none' || menuPanel.style.display === '') ? 'block' : 'none'; });
+      document.addEventListener('click', (event) => { if (!menuToggle.contains(event.target) && !menuPanel.contains(event.target)) menuPanel.style.display = 'none'; });
+      document.querySelectorAll('#menuPanel a').forEach(link => { link.addEventListener('click', () => { menuPanel.style.display = 'none'; }); });
+      // slider logic remains same
+      const track = document.getElementById('sliderTrack');
+      const dotsContainer = document.getElementById('sliderDots');
+      const slides = Array.from(track.children);
+      const totalSlides = slides.length;
+      for (let i = 0; i < totalSlides; i++) { const dot = document.createElement('span'); dot.classList.add('dot'); dot.dataset.index = i; dot.addEventListener('click', function() { goToSlide(parseInt(this.dataset.index)); }); dotsContainer.appendChild(dot); }
+      const dots = document.querySelectorAll('.dot');
+      const firstClone = slides[0].cloneNode(true);
+      const lastClone = slides[totalSlides - 1].cloneNode(true);
+      track.appendChild(firstClone);
+      track.insertBefore(lastClone, slides[0]);
+      const totalClones = track.children.length;
+      let currentRealIndex = 1;
+      track.style.transform = `translateX(-${currentRealIndex * 100}%)`;
+      function updateDots(realIdx) { dots.forEach((d, i) => { if (i === realIdx) d.classList.add('active'); else d.classList.remove('active'); }); }
+      updateDots(0);
+      function goToSlide(realIndex) { const targetAllIndex = realIndex + 1; currentRealIndex = targetAllIndex; track.style.transition = 'transform 0.3s ease-out'; track.style.transform = `translateX(-${currentRealIndex * 100}%)`; updateDots(realIndex); }
+      track.addEventListener('transitionend', () => { if (currentRealIndex === 0) { track.style.transition = 'none'; currentRealIndex = totalSlides; track.style.transform = `translateX(-${currentRealIndex * 100}%)`; } else if (currentRealIndex === totalClones - 1) { track.style.transition = 'none'; currentRealIndex = 1; track.style.transform = `translateX(-${100}%)`; } });
+      let autoInterval = setInterval(() => { let nextAllIndex = currentRealIndex + 1; track.style.transition = 'transform 0.3s ease-out'; track.style.transform = `translateX(-${nextAllIndex * 100}%)`; currentRealIndex = nextAllIndex; let realIdx; if (currentRealIndex === 0) realIdx = totalSlides - 1; else if (currentRealIndex === totalClones - 1) realIdx = 0; else realIdx = currentRealIndex - 1; updateDots(realIdx); }, 4000);
+      let startX = 0, isDragging = false;
+      track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; track.style.transition = 'none'; clearInterval(autoInterval); }, {passive: true});
+      track.addEventListener('touchmove', (e) => { if (!isDragging) return; e.preventDefault(); const currentX = e.touches[0].clientX; const diff = currentX - startX; const movePercent = (diff / track.parentElement.offsetWidth) * 100; track.style.transform = `translateX(calc(-${currentRealIndex * 100}% + ${movePercent}px))`; }, {passive: false});
+      track.addEventListener('touchend', (e) => { if (!isDragging) return; isDragging = false; const endX = e.changedTouches[0].clientX; const diff = endX - startX; if (Math.abs(diff) > 50) { if (diff > 0) currentRealIndex = Math.max(0, currentRealIndex - 1); else currentRealIndex = Math.min(totalClones - 1, currentRealIndex + 1); } track.style.transition = 'transform 0.3s ease-out'; track.style.transform = `translateX(-${currentRealIndex * 100}%)`; let realIdx; if (currentRealIndex === 0) realIdx = totalSlides - 1; else if (currentRealIndex === totalClones - 1) realIdx = 0; else realIdx = currentRealIndex - 1; updateDots(realIdx); clearInterval(autoInterval); autoInterval = setInterval(() => { let next = currentRealIndex + 1; track.style.transition = 'transform 0.3s ease-out'; track.style.transform = `translateX(-${next * 100}%)`; currentRealIndex = next; let r; if (currentRealIndex === 0) r = totalSlides - 1; else if (currentRealIndex === totalClones - 1) r = 0; else r = currentRealIndex - 1; updateDots(r); }, 4000); });
+      track.addEventListener('dragstart', (e) => e.preventDefault());
+    })();
+  </script>
+</body>
+</html>

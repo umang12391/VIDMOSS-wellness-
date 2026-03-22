@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Original Image Size</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f0f9f0 0%, #e2f0e2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .image-wrapper {
+      display: inline-block;
+      background: transparent;
+      /* Very slight rounded corners - thoda sa rounded */
+      border-radius: 12px;
+      overflow: hidden;
+      /* Border added */
+      border: 2px solid #1c5a3a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .original-image {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      outline: none;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px;
+      }
+      .original-image {
+        max-height: 85vh;
+      }
+      .image-wrapper {
+        border-radius: 8px;
+        border-width: 1.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="image-wrapper">
+    <img 
+      class="original-image"
+      src="become.jpg" 
+      alt=""
+      onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'400\' viewBox=\'0 0 400 400\'%3E%3Crect width=\'400\' height=\'400\' fill=\'%23333c44\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'20\' fill=\'%23ffffff\' text-anchor=\'middle\' dy=\'.3em\'%3Eview.jpg not found%3C/text%3E%3C/svg%3E';"
+    >
+  </div>
+
+  <script>
+    const imgElement = document.querySelector('.original-image');
+    if (imgElement) {
+      imgElement.style.border = 'none';
+      imgElement.style.borderRadius = '0';
+      imgElement.style.boxShadow = 'none';
+      imgElement.style.outline = 'none';
+    }
+  </script>
+</body>
+</html>
