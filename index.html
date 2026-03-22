@@ -796,7 +796,7 @@
       transform: scale(1.02);
     }
 
-    /* ready to start box */
+    /* ready to start box - 3 buttons in row left/center/right alignment */
     .ready-start-box {
       background: #ffffff;
       border-radius: 1.25rem;
@@ -813,17 +813,27 @@
       margin-bottom: 0.8rem;
       letter-spacing: -0.2px;
     }
+    /* Updated action buttons row: flex with space-between for left/center/right alignment */
     .action-buttons-row {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.6rem;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+    }
+    .action-buttons-row .tiny-clean-btn {
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+      min-width: 0;
     }
     .tiny-clean-btn {
       background-color: #f0f7f0;
       border: 1px solid #1c5a3a;
       border-radius: 2rem;
-      padding: 0.4rem 1rem;
+      padding: 0.5rem 0.75rem;
       font-size: 0.7rem;
       font-weight: 600;
       color: #1c5a3a;
@@ -835,6 +845,12 @@
       text-align: center;
       line-height: 1.2;
       letter-spacing: 0.2px;
+    }
+    @media (min-width: 640px) {
+      .tiny-clean-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+      }
     }
     .tiny-clean-btn:hover {
       background-color: #1c5a3a;
@@ -870,7 +886,7 @@
     .upi-id-highlight {
       background: #eef5ee;
       padding: 0.5rem 0.9rem;
-      border-radius: 0.5rem;
+      border-radius: 0.2rem;
       font-size: 0.85rem;
       font-weight: 700;
       color: #1c5a3a;
@@ -933,7 +949,17 @@
         <div class="partner-card"><div class="partner-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg></div><div class="partner-title">Open Center for Others (3rd Party Model)</div><ul class="partner-points"><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Center on someone else's name</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Expansion Model</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Start Franchise Model</li></ul><a href="becomeleader.html" class="partner-btn">Become Leader</a></div>
         <div class="partner-card"><div class="partner-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M9 21V9M15 21V9M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg></div><div class="partner-title">VIDMOSS Business opportunity</div><ul class="partner-points"><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Low Investment Business <br> Multiple Income Sources</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Full Training & Support <br> Online + Offline Model</li><li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Fast growing network<br> </li></ul><a href="startfranchisemodel.html" class="partner-btn">Sehat bhi-Rozgar bhi</a></div>
       </div>
-      <div class="partner-ready-wrapper" style="margin-top: 2rem; display: flex; justify-content: center;"><div class="ready-start-box" style="max-width: 420px; width: 100%; margin-top: 0;"><div class="ready-title">Ready to start your VIDMOSS journey</div><div class="action-buttons-row"><a href="joiny.html" class="tiny-clean-btn">Join Now</a><a href="tel:+919795199119" class="tiny-clean-btn">Talk to Expert</a><a href="https://wa.me/919795199119?text=Hello%20VIDMOSS%2C%20I%20am%20interested%20in%20partner%20opportunity" target="_blank" class="tiny-clean-btn">WhatsApp Now</a></div></div></div>
+      <!-- Ready to start box with 3 buttons evenly spaced left/center/right on both desktop and mobile -->
+      <div class="partner-ready-wrapper" style="margin-top: 2rem; display: flex; justify-content: center;">
+        <div class="ready-start-box" style="max-width: 550px; width: 100%; margin-top: 0;">
+          <div class="ready-title">Ready to start your VIDMOSS journey</div>
+          <div class="action-buttons-row">
+            <a href="joiny.html" class="tiny-clean-btn">Join Now</a>
+            <a href="tel:+919795199119" class="tiny-clean-btn">Talk to Expert</a>
+            <a href="https://wa.me/919795199119?text=Hello%20VIDMOSS%2C%20I%20am%20interested%20in%20partner%20opportunity" target="_blank" class="tiny-clean-btn">WhatsApp Now</a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Photo Gallery -->
@@ -972,7 +998,7 @@
       menuToggle.addEventListener('click', (e) => { e.stopPropagation(); menuPanel.style.display = (menuPanel.style.display === 'none' || menuPanel.style.display === '') ? 'block' : 'none'; });
       document.addEventListener('click', (event) => { if (!menuToggle.contains(event.target) && !menuPanel.contains(event.target)) menuPanel.style.display = 'none'; });
       document.querySelectorAll('#menuPanel a').forEach(link => { link.addEventListener('click', () => { menuPanel.style.display = 'none'; }); });
-      // slider logic (unchanged)
+      // slider logic
       const track = document.getElementById('sliderTrack');
       const dotsContainer = document.getElementById('sliderDots');
       const slides = Array.from(track.children);
@@ -999,4 +1025,4 @@
     })();
   </script>
 </body>
-</html>
+                                                                                                                                                                                                                                                                                     </html>
